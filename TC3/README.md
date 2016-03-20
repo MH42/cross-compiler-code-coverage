@@ -23,7 +23,7 @@ If you want to do a quick code coverage analysis without running all the web tes
 
 
 ## Using <span style="font-variant: small-caps">TC3</span> - Quick analysis procedure
-Currently, calculating the code coeverage is a semi-automatic process consisting of there three steps. Basically, these steps could be executed automatically. However, they depend on the test framework in use (e.g. JUnit, TestNG vs. Selenium, TestComplete...). For this reason, we currently leave the test execution step to the user. In our evaulation, we only considered the runtime required for instrumenting the code and for calculating the code coverage.
+Currently, calculating the code coeverage is a semi-automatic process consisting of there three steps. Basically, these steps could be executed automatically. However, they depend on the test framework in use (e.g. JUnit, TestNG vs. Selenium, TestComplete...). For this reason, we currently leave the test execution step to the user. In our evaulation, we have only considered the runtime required for instrumenting the code and for calculating the code coverage.
 
 1. Click in <span style="font-variant: small-caps">TC3</span> on the Settings-icon. Select the project you want to analyze. For example, use 'EclispeHupaR1684702' in the ['Hupa-Versions'](../Hupa-Versions/) directory (please note the README-file in this directory). Select the analysis precision level. We have used Expression Star as instumentation level in our evaluation. Define the packages that contain client-side code and server-side/desktop application code, respectively. Click OK.
 2. Make sure the MySQL-dump 'hupa_coverage.sql' is available.
@@ -31,7 +31,8 @@ Currently, calculating the code coeverage is a semi-automatic process consisting
 
 
 ## Using <span style="font-variant: small-caps">TC3</span> - Full analysis procedure
-Currently, calculating the code coeverage is a semi-automatic process consisting of there three steps. Basically, these steps could be executed automatically. However, they depend on the test framework in use (e.g. JUnit, TestNG vs. Selenium, TestComplete...). For this reason, we currently leave the test execution step to the user. 
+Currently, calculating the code coeverage is a semi-automatic process consisting of there three steps. Basically, these steps could be executed automatically. However, they depend on the test framework in use (e.g. JUnit, TestNG vs. Selenium, TestComplete...). For this reason, we currently leave the test execution step to the user. In our evaulation, we have only considered the runtime required for instrumenting the code and for calculating the code coverage.
+
 The full code coverage analysis procedure looks like this:
 
 1. Click in <span style="font-variant: small-caps">TC3</span> on the Settings-icon. Select the project you want to analyze. For example, use 'EclispeHupaR1684702' in the ['Hupa-Versions'](../Hupa-Versions/) directory (please note the README-file in this directory). Select the analysis precision level. We have used Expression Star as instumentation level in our evaluation. Define the packages that contain client-side code and server-side/desktop application code, respectively. Click OK.
