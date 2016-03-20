@@ -1,6 +1,6 @@
 # Using <span style="font-variant: small-caps">TC3</span>
 
-<span style="font-variant: small-caps">TC3</span> calculates the code coverage of transcompiled cross-platform applications Currently, we support web applications created with Google Web Toolkit. That is, <span style="font-variant: small-caps">TC3</span> is able to determine the Java code coverage of a 
+<span style="font-variant: small-caps">TC3</span> calculates the code coverage of transcompiled cross-platform applications for any kind of test (unit, integration or ui/web test). Currently, we support web applications created with Google Web Toolkit. Besides, the tool is also able to calculate the code coverage of desktop applications written in Java.
 
 ## Requirements
 **Necessary:**
