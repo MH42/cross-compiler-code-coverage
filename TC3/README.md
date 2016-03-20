@@ -17,7 +17,7 @@ If you want to check out and build Hupa from source, you will need [Maven](https
 
 
 ## Install <span style="font-variant: small-caps">TC3</span>
-Clone this repository. You will find the <span style="font-variant: small-caps">TC3</span> plugin for Eclipse in this directory. Install the plugin in Eclipse: Select Menu 'Help' -> Install New Software'. Click on 'Add', fill in a name and the path to <span style="font-variant: small-caps">TC3</span>. Please note, it is an Archive-file. Deselect the option 'Group items per category'. Follow the Eclipse-Installation process. Afterwards, select in the menu 'Window' -> 'Show View' -> 'Other' -> '<span style="font-variant: small-caps">TC3</span>'.
+Clone this repository. You will find the <span style="font-variant: small-caps">TC3</span> plugin for Eclipse in this directory. Install the plugin in Eclipse: Select Menu 'Help' -> Install New Software'. Click on 'Add', fill in a name and the path to <span style="font-variant: small-caps">TC3</span>. Please note, it is an Archive-file. Deselect the option 'Group items per category'. Follow the Eclipse-Installation process. Afterwards, select in the menu 'Window' -> 'Show View' -> 'Other' -> '<span style="font-variant: small-caps">TransCompiledCodeCoverage</span>'.
 
 If you want to do a quick code coverage analysis without running all the web tests, you can use the log-traces which we have used in our evaluation. You will find them in the [webtests](../webtests/) directory as MySQL-dumps.
 
