@@ -8,12 +8,14 @@ In this directory, you will find our test suite. We have applied our test suite 
 
 You will find our test suite in the following directory:
 - tracesAcceptanceSelenium R1684702 autotest
+
 It is also available as zip-file.
 
 In our evaluation, we have performed the following steps:
-1) Instrument the code. To do this, click on the barcode icon in the Eclipse-Plugin <span style="font-variant: small-caps">TC3</span>.
-2) Run the tests. See below for more information.
-3) Calculate the code coverage. To do this, click the statistics icon in the Eclipse-Plugin <span style="font-variant: small-caps">TC3</span>.
+
+1. Instrument the code. To do this, click on the barcode icon in the Eclipse-Plugin <span style="font-variant: small-caps">TC3</span>.
+2. Run the tests. See below for more information.
+3. Calculate the code coverage. To do this, click the statistics icon in the Eclipse-Plugin <span style="font-variant: small-caps">TC3</span>.
 
 ## Running the test suite
 If you want to run the web tests, you will need to download and install [Selenium](http://www.seleniumhq.org/) for Firefox. The Selenium IDE is completely sufficient. 
