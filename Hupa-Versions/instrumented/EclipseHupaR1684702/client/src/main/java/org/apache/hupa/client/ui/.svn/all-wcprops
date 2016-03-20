@@ -1,0 +1,461 @@
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/repos/asf/!svn/ver/1684470/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui
+END
+ComposeView.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/ComposeView.java
+END
+LabelListView.ui.xml
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/LabelListView.ui.xml
+END
+Layoutable.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/Layoutable.java
+END
+ShowMorePagerPanel.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/repos/asf/!svn/ver/1516164/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/ShowMorePagerPanel.java
+END
+AddressListView.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/repos/asf/!svn/ver/1613760/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/AddressListView.java
+END
+StatusView.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/StatusView.java
+END
+HupaLayoutable.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/HupaLayoutable.java
+END
+TopBarView.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/TopBarView.java
+END
+HupaLayout.ui.xml
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/HupaLayout.ui.xml
+END
+_ToolPanel.ui.xml
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/_ToolPanel.ui.xml
+END
+__OutlinePanel.ui.xml
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/__OutlinePanel.ui.xml
+END
+__ContentPanel.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/__ContentPanel.java
+END
+TopView.ui.xml
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/TopView.ui.xml
+END
+HupaLayout.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/HupaLayout.java
+END
+__OutlinePanel.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/__OutlinePanel.java
+END
+ContactPropertiesView.ui.xml
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/ContactPropertiesView.ui.xml
+END
+HupaPlugins.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/HupaPlugins.java
+END
+LoginLayout.ui.xml
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/LoginLayout.ui.xml
+END
+FolderListView.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/FolderListView.java
+END
+ContactPropertiesView.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/ContactPropertiesView.java
+END
+MessageContentView.ui.xml
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/repos/asf/!svn/ver/1671834/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/MessageContentView.ui.xml
+END
+MessagesCellTable.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/MessagesCellTable.java
+END
+MessageListFooterView.ui.xml
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/MessageListFooterView.ui.xml
+END
+LabelNode.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/LabelNode.java
+END
+NavigationView.ui.xml
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/NavigationView.ui.xml
+END
+ToolBarView.ui.xml
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/repos/asf/!svn/ver/1684470/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/ToolBarView.ui.xml
+END
+_CenterPanel.ui.xml
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/_CenterPanel.ui.xml
+END
+ComposeView.ui.xml
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/repos/asf/!svn/ver/1660218/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/ComposeView.ui.xml
+END
+ToolBarView.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/repos/asf/!svn/ver/1684470/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/ToolBarView.java
+END
+LoginView.ui.xml
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/repos/asf/!svn/ver/1580208/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/LoginView.ui.xml
+END
+_CenterPanel.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/_CenterPanel.java
+END
+ContactsListView.ui.xml
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/ContactsListView.ui.xml
+END
+WidgetContainerDisplayable.java
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/repos/asf/!svn/ver/1522386/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/WidgetContainerDisplayable.java
+END
+LoginView.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/LoginView.java
+END
+SearchBoxView.ui.xml
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/SearchBoxView.ui.xml
+END
+ContactsListView.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/ContactsListView.java
+END
+_CenterContactPanel.ui.xml
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/_CenterContactPanel.ui.xml
+END
+LabelListView.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/LabelListView.java
+END
+AddressListView.ui.xml
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/AddressListView.ui.xml
+END
+SettingNavView.ui.xml
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/SettingNavView.ui.xml
+END
+SearchBoxView.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/SearchBoxView.java
+END
+StatusView.ui.xml
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/StatusView.ui.xml
+END
+_CenterContactPanel.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/_CenterContactPanel.java
+END
+SettingNavView.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/SettingNavView.java
+END
+TopBarView.ui.xml
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/repos/asf/!svn/ver/1671834/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/TopBarView.ui.xml
+END
+ComposeToolBarView.ui.xml
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/ComposeToolBarView.ui.xml
+END
+LabelCell.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/LabelCell.java
+END
+_CenterComposePanel.ui.xml
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/_CenterComposePanel.ui.xml
+END
+ComposeToolBarView.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/ComposeToolBarView.java
+END
+__ContentPanel.ui.xml
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/__ContentPanel.ui.xml
+END
+_CenterComposePanel.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/_CenterComposePanel.java
+END
+SettingLabelPanel.ui.xml
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/SettingLabelPanel.ui.xml
+END
+LoginLayoutable.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/LoginLayoutable.java
+END
+_ToolPanel.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/_ToolPanel.java
+END
+SettingLabelPanel.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/SettingLabelPanel.java
+END
+FolderListView.ui.xml
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/FolderListView.ui.xml
+END
+LoginLayout.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/LoginLayout.java
+END
+MessageListView.ui.xml
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/MessageListView.ui.xml
+END
+MessageContentView.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/repos/asf/!svn/ver/1613760/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/MessageContentView.java
+END
+MessageListView.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/repos/asf/!svn/ver/1613760/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/MessageListView.java
+END
+NotificationView.ui.xml
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/NotificationView.ui.xml
+END
+README
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/repos/asf/!svn/ver/1683771/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/README
+END
+__OutlineComposePanel.ui.xml
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/__OutlineComposePanel.ui.xml
+END
+__ComposePanel.ui.xml
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/__ComposePanel.ui.xml
+END
+NotificationView.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/NotificationView.java
+END
+LabelPropertiesView.ui.xml
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/LabelPropertiesView.ui.xml
+END
+__OutlineComposePanel.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/__OutlineComposePanel.java
+END
+__ComposePanel.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/__ComposePanel.java
+END
+LogoView.ui.xml
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/LogoView.ui.xml
+END
+LabelPropertiesView.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/LabelPropertiesView.java
+END
+_CenterSettingPanel.ui.xml
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/_CenterSettingPanel.ui.xml
+END
+MessageListFooterView.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/MessageListFooterView.java
+END
+NavigationView.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/NavigationView.java
+END
+HasRefresh.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/HasRefresh.java
+END
+LogoView.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/LogoView.java
+END
+_CenterSettingPanel.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/ui/_CenterSettingPanel.java
+END

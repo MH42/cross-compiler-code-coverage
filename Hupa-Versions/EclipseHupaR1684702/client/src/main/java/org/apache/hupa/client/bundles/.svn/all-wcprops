@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/bundles
+END
+folder_add.png
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/repos/asf/!svn/ver/817556/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/bundles/folder_add.png
+END
+attach.png
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/repos/asf/!svn/ver/817556/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/bundles/attach.png
+END
+email_link.png
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/repos/asf/!svn/ver/817556/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/bundles/email_link.png
+END
+folder_sub.png
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/repos/asf/!svn/ver/1156969/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/bundles/folder_sub.png
+END
+HupaImageBundle.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/bundles/HupaImageBundle.java
+END
+email.png
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/repos/asf/!svn/ver/817556/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/bundles/email.png
+END
+IMAPTreeImages.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/repos/asf/!svn/ver/1162481/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/bundles/IMAPTreeImages.java
+END
+folder.png
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/repos/asf/!svn/ver/817556/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/bundles/folder.png
+END

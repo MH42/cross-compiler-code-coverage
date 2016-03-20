@@ -1,0 +1,735 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost:8282/hupa/Hupa.html" />
+<title>TestTemplate</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">TestTemplate</td></tr>
+</thead><tbody>
+<!--BeforeTest-->
+<tr>
+	<td>storeEval</td>
+	<td>&quot;LoginCheck&quot;</td>
+	<td>testname</td>
+</tr>
+<tr>
+	<td>runScript</td>
+	<td>javascript{var xhr = new XMLHttpRequest(); xhr.open('POST','http://localhost:8091/loggingServer',false); xhr.send(&quot;1&amp;&quot;+&quot;''&quot;)}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>http://localhost:8282/hupa/Hupa.html?a=b&amp;testitem=LoginCheckElementsLogoutTest</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=div.GP5U1CUCCS</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=div.GP5U1CUCCS</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.GP5U1CUCCS</td>
+	<td>username</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=email</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>id=email</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>id=email</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertEditable</td>
+	<td>id=email</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//tr[2]/td/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[2]/td/div</td>
+	<td>password</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=password</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>id=password</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>id=password</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertEditable</td>
+	<td>id=password</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertEditable</td>
+	<td>//button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//td[2]/p/button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[2]/p/button</td>
+	<td>Login</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//td[2]/p/button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertEditable</td>
+	<td>//td[2]/p/button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=email</td>
+	<td>mh1@freenet.de</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=div.popupContent &gt; div &gt; table &gt; tbody &gt; tr &gt; td</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.popupContent &gt; div &gt; table &gt; tbody &gt; tr &gt; td</td>
+	<td>IMAP Server:</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>xpath=(//input[@type='text'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertEditable</td>
+	<td>xpath=(//input[@type='text'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xpath=(//input[@type='text'])[2]</td>
+	<td>mx.freenet.de</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[5]/div/div/table/tbody/tr/td[2]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertEditable</td>
+	<td>//div[5]/div/div/table/tbody/tr/td[2]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertEditable</td>
+	<td>xpath=(//input[@type='text'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xpath=(//input[@type='text'])[3]</td>
+	<td>993</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=gwt-uid-12</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>id=gwt-uid-12</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//td[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[5]</td>
+	<td>Secure</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//div[5]/div/div/table/tbody/tr[2]/td</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[5]/div/div/table/tbody/tr[2]/td</td>
+	<td>SMTP Server:</td>
+</tr>
+<tr>
+	<td>assertEditable</td>
+	<td>xpath=(//input[@type='text'])[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>xpath=(//input[@type='text'])[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xpath=(//input[@type='text'])[4]</td>
+	<td>mx.freenet.de</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//tr[2]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[2]/td[3]</td>
+	<td>exact:Port:</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>xpath=(//input[@type='text'])[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertEditable</td>
+	<td>xpath=(//input[@type='text'])[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xpath=(//input[@type='text'])[5]</td>
+	<td>587</td>
+</tr>
+<tr>
+	<td>assertTable</td>
+	<td>css=div.popupContent &gt; div &gt; table.1.4</td>
+	<td>Secure</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[2]/td[5]</td>
+	<td>Secure</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=gwt-uid-13</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>id=gwt-uid-13</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertEditable</td>
+	<td>id=password</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=password</td>
+	<td>Hupa-1</td>
+</tr>
+<tr>
+	<td>assertEditable</td>
+	<td>css=button.gwt-SubmitButton.GP5U1CUCAS</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>css=button.gwt-SubmitButton.GP5U1CUCAS</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertEditable</td>
+	<td>css=button.gwt-SubmitButton.GP5U1CUCAS</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>css=button.gwt-SubmitButton.GP5U1CUCAS</td>
+	<td></td>
+</tr>
+<!--Test-->
+<tr>
+	<td>assertTitle</td>
+	<td>Hupa webmail</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>link=Refresh</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>link=Refresh</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Refresh</td>
+	<td>Refresh</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>link=Refresh</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>link=Compose</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Compose</td>
+	<td>Compose</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>link=Compose</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>link=Reply</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Reply</td>
+	<td>Reply</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>link=Reply</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>link=Reply all</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Reply all</td>
+	<td>Reply all</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>link=Reply all</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>link=Forward</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Forward</td>
+	<td>Forward</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>link=Forward</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>link=Show Raw</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Show Raw</td>
+	<td>Show Raw</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>link=Show Raw</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>link=Delete</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Delete</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>link=Delete</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>link=Mark</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Mark</td>
+	<td>Mark</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>link=Mark</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=div.GP5U1CUCLB</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.GP5U1CUCLB</td>
+	<td>INBOX</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>css=div.GP5U1CUCLB</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=div.GP5U1CUCNB</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.GP5U1CUCNB</td>
+	<td>drafts</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>css=div.GP5U1CUCNB</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>xpath=(//div[@onclick=''])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[@onclick=''])[3]</td>
+	<td>virenverdacht</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>xpath=(//div[@onclick=''])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>xpath=(//div[@onclick=''])[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[@onclick=''])[4]</td>
+	<td>spamverdacht</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>xpath=(//div[@onclick=''])[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>xpath=(//div[@onclick=''])[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[@onclick=''])[5]</td>
+	<td>sent</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>xpath=(//div[@onclick=''])[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>xpath=(//div[@onclick=''])[6]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[@onclick=''])[6]</td>
+	<td>Trash</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>xpath=(//div[@onclick=''])[6]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTable</td>
+	<td>css=div.GP5U1CUCCB &gt; table.0.1</td>
+	<td>mh1@freenet.de</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//div[2]/div/div/table/tbody/tr/td[2]/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[2]/div/div/table/tbody/tr/td[2]/div</td>
+	<td>mh1@freenet.de</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[2]/div/div/table/tbody/tr/td[2]/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>link=Logout</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Logout</td>
+	<td>Logout</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>link=Logout</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>link=Settings</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Settings</td>
+	<td>Settings</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>link=Settings</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>link=Mail</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Mail</td>
+	<td>Mail</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>link=Mail</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>link=About</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=About</td>
+	<td>About</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>link=About</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>name=s</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertEditable</td>
+	<td>name=s</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>name=s</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//button</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=div.emptyMsg</td>
+	<td></td>
+</tr>
+<!--Test-->
+<tr>
+	<td>selectWindow</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Compose</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css=textarea.gwt-SuggestBox</td>
+	<td>mh1@freenet.de</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@type='text']</td>
+	<td>Selenium-Test-Mail</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css=textarea.gwt-SuggestBox</td>
+	<td>hirzel@informatik.uni-tuebingen.de</td>
+</tr>
+<tr>
+	<td>selectWindow</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[contains(@class, 'gwt-RichTextArea hasRichTextToolbar')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>this.browserbot.findElement(&quot;class=gwt-RichTextArea hasRichTextToolbar&quot;).contentWindow.document.body.innerHTML='Hallo,&lt;br&gt;dies ist eine Mail, aufgezeichnet mit Selenium.&lt;br&gt;Bla, bla, bla.&lt;br&gt;&lt;br&gt;Ciao.';</td>
+	<td>MyEditor</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Send</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//div[3]/div/div[3]/div/div/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[3]/div/div[3]/div/div/div</td>
+	<td>Your mail has been sent.</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>link=Refresh</td>
+	<td></td>
+</tr>
+<!--AfterTest-->
+<tr>
+	<td>clickAt</td>
+	<td>link=Logout</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=button.gwt-SubmitButton.GP5U1CUCAS</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=button.gwt-SubmitButton.GP5U1CUCAS</td>
+	<td></td>
+</tr>
+<tr>
+	<td>runScript</td>
+	<td>javascript{var xhr = new XMLHttpRequest(); xhr.open('POST','http://localhost:8091/loggingServer',false); xhr.send(&quot;0&amp;&quot;+storedVars['testname'])}</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

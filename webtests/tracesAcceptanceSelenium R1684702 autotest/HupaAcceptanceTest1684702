@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+  <title>Test Suite</title>
+</head>
+<body>
+<table id="suiteTable" cellpadding="1" cellspacing="1" border="1" class="selenium"><tbody>
+<tr><td><b>Test Suite</b></td></tr>
+<tr><td><a href="LoginCheckElementsLogoutTestBackup">LoginCheckElementsLogoutTest</a></td></tr>
+<tr><td><a href="navigate-compose-and-back.html">navigate-compose-and-back</a></td></tr>
+<tr><td><a href="SendWithoutMailAddressTest">SendWithoutMailAddressTest</a></td></tr>
+<tr><td><a href="email-prefilled-after-loginOriginal.html">email-prefilled-after-login</a></td></tr>
+<tr><td><a href="autofill-mail-address.html">autofill-mail-address</a></td></tr>
+<tr><td><a href="CancelMailTest">CancelMailTest</a></td></tr>
+<tr><td><a href="Addressbook">Addressbook</a></td></tr>
+<tr><td><a href="fill-email-from-contact.html">fill-email-from-contact</a></td></tr>
+<tr><td><a href="send-mail.html">send-mail</a></td></tr>
+<tr><td><a href="TrashInboxTest">TrashInboxTest</a></td></tr>
+<tr><td><a href="sent-mail-in-sent-box.html">sent-mail-in-sent-box</a></td></tr>
+<tr><td><a href="SendMailSimplifiedTest">SendMailSimplifiedTest</a></td></tr>
+<tr><td><a href="CheckAndDisplayMail1">CheckAndDisplayMail1</a></td></tr>
+<tr><td><a href="MarkMailReadTest">MarkMailReadTest</a></td></tr>
+<tr><td><a href="MarkMailUnreadTest">MarkMailUnreadTest</a></td></tr>
+<tr><td><a href="BCCTest">BCCTest</a></td></tr>
+<tr><td><a href="CCTest">CCTest</a></td></tr>
+<tr><td><a href="ForwardTest">ForwardTest</a></td></tr>
+<tr><td><a href="CheckAndDisplayMail2">CheckAndDisplayMail2</a></td></tr>
+<tr><td><a href="CheckAndDisplayMail3">CheckAndDisplayMail3</a></td></tr>
+<tr><td><a href="ReplyTest">ReplyTest</a></td></tr>
+<tr><td><a href="ReplyAllTest">ReplyAllTest</a></td></tr>
+<tr><td><a href="SortMailsBySubjectTest">SortMailsBySubjectTest</a></td></tr>
+<tr><td><a href="SortMailsByDateTest">SortMailsByDateTest</a></td></tr>
+<tr><td><a href="SelectBulkMailsTest">SelectBulkMailsTest</a></td></tr>
+<tr><td><a href="RefreshTest">RefreshTest</a></td></tr>
+<tr><td><a href="SearchTest">SearchTest</a></td></tr>
+<tr><td><a href="SearchDeleteAndRetypeTest">SearchDeleteAndRetypeTest</a></td></tr>
+<tr><td><a href="SearchDeleteTest">SearchDeleteTest</a></td></tr>
+<tr><td><a href="DeleteAllMailsInMailbox1">DeleteAllMailsInMailbox1</a></td></tr>
+<tr><td><a href="DeleteAllMailsInMailbox2">DeleteAllMailsInMailbox2</a></td></tr>
+<tr><td><a href="DeleteAllMailsInMailbox3">DeleteAllMailsInMailbox3</a></td></tr>
+</tbody></table>
+</body>
+</html>

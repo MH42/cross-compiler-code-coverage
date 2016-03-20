@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/repos/asf/!svn/ver/1683360/james/hupa/trunk/server/src/test/java/org/apache/hupa/server/utils
+END
+TestUtils.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/repos/asf/!svn/ver/1683360/james/hupa/trunk/server/src/test/java/org/apache/hupa/server/utils/TestUtils.java
+END
+MessageUtilsTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/test/java/org/apache/hupa/server/utils/MessageUtilsTest.java
+END
+RegexPatternsTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/test/java/org/apache/hupa/server/utils/RegexPatternsTest.java
+END

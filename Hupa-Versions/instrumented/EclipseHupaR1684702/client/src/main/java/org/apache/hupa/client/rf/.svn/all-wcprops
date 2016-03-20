@@ -1,0 +1,119 @@
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/rf
+END
+GetMessageDetailsRequest.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/rf/GetMessageDetailsRequest.java
+END
+GetMessageRawRequest.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/rf/GetMessageRawRequest.java
+END
+DeleteFolderRequest.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/rf/DeleteFolderRequest.java
+END
+SendMessageRequest.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/rf/SendMessageRequest.java
+END
+CreateFolderRequest.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/rf/CreateFolderRequest.java
+END
+DeleteMessageAllRequest.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/rf/DeleteMessageAllRequest.java
+END
+RenameFolderRequest.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/rf/RenameFolderRequest.java
+END
+DeleteMessageByUidRequest.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/rf/DeleteMessageByUidRequest.java
+END
+LoginUserRequest.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/rf/LoginUserRequest.java
+END
+FetchFoldersRequest.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/rf/FetchFoldersRequest.java
+END
+LogoutUserRequest.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/rf/LogoutUserRequest.java
+END
+SendReplyMessageRequest.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/rf/SendReplyMessageRequest.java
+END
+MoveMessageRequest.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/rf/MoveMessageRequest.java
+END
+FetchMessagesRequest.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/rf/FetchMessagesRequest.java
+END
+CheckSessionRequest.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/rf/CheckSessionRequest.java
+END
+ImapFolderRequest.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/rf/ImapFolderRequest.java
+END
+SendForwardMessageRequest.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/rf/SendForwardMessageRequest.java
+END
+HupaRequestFactory.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/rf/HupaRequestFactory.java
+END
+SetFlagRequest.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/rf/SetFlagRequest.java
+END

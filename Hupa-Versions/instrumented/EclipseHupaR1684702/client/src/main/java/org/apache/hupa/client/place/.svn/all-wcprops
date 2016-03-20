@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/place
+END
+ContactPlace.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/place/ContactPlace.java
+END
+FolderPlace.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/place/FolderPlace.java
+END
+HupaPlace.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/repos/asf/!svn/ver/1516164/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/place/HupaPlace.java
+END
+SettingPlace.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/place/SettingPlace.java
+END
+AbstractPlace.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/place/AbstractPlace.java
+END
+DefaultPlace.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/place/DefaultPlace.java
+END
+MessagePlace.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/place/MessagePlace.java
+END
+ComposePlace.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/place/ComposePlace.java
+END

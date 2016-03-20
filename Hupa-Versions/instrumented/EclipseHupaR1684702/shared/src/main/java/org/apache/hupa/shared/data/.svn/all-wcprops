@@ -1,0 +1,203 @@
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/data
+END
+HasFullName.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/repos/asf/!svn/ver/1573291/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/data/HasFullName.java
+END
+UserImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/data/UserImpl.java
+END
+FetchMessagesActionImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/data/FetchMessagesActionImpl.java
+END
+SetFlagActionImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/data/SetFlagActionImpl.java
+END
+MessageImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/data/MessageImpl.java
+END
+GetMessageDetailsActionImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/data/GetMessageDetailsActionImpl.java
+END
+SmtpMessageImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/data/SmtpMessageImpl.java
+END
+MailHeaderImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/data/MailHeaderImpl.java
+END
+SendMessageActionImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/data/SendMessageActionImpl.java
+END
+DeleteFolderActionImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/data/DeleteFolderActionImpl.java
+END
+GetMessageRawActionImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/data/GetMessageRawActionImpl.java
+END
+MessageAttachmentImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/data/MessageAttachmentImpl.java
+END
+SettingsImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/data/SettingsImpl.java
+END
+RenameFolderActionImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/data/RenameFolderActionImpl.java
+END
+LogoutUserActionImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/data/LogoutUserActionImpl.java
+END
+DeleteMessageResultImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/data/DeleteMessageResultImpl.java
+END
+AbstractMessageImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/data/AbstractMessageImpl.java
+END
+MoveMessageActionImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/data/MoveMessageActionImpl.java
+END
+FetchMessagesResultImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/data/FetchMessagesResultImpl.java
+END
+SendForwardMessageActionImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/data/SendForwardMessageActionImpl.java
+END
+ImapFolderImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/data/ImapFolderImpl.java
+END
+GetMessageDetailsResultImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/data/GetMessageDetailsResultImpl.java
+END
+MessageDetailsImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/data/MessageDetailsImpl.java
+END
+GetMessageRawResultImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/data/GetMessageRawResultImpl.java
+END
+CreateFolderActionImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/data/CreateFolderActionImpl.java
+END
+DeleteMessageAllActionImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/data/DeleteMessageAllActionImpl.java
+END
+DeleteMessageByUidActionImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/data/DeleteMessageByUidActionImpl.java
+END
+DeleteMessageActionImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/data/DeleteMessageActionImpl.java
+END
+HasId.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/repos/asf/!svn/ver/1573291/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/data/HasId.java
+END
+LogoutUserResultImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/data/LogoutUserResultImpl.java
+END
+SendReplyMessageActionImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/data/SendReplyMessageActionImpl.java
+END
+TagImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/repos/asf/!svn/ver/1577827/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/data/TagImpl.java
+END
+GenericResultImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/data/GenericResultImpl.java
+END

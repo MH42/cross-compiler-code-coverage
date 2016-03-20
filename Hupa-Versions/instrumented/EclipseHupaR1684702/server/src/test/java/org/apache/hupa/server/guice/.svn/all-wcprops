@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/test/java/org/apache/hupa/server/guice
+END
+GuiceJunitRunner.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/repos/asf/!svn/ver/1573291/james/hupa/trunk/server/src/test/java/org/apache/hupa/server/guice/GuiceJunitRunner.java
+END
+ServerModulTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/test/java/org/apache/hupa/server/guice/ServerModulTest.java
+END
+GuiceServerTestModule.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/test/java/org/apache/hupa/server/guice/GuiceServerTestModule.java
+END

@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/preferences
+END
+InSessionUserPreferencesStorage.java
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/preferences/InSessionUserPreferencesStorage.java
+END
+InImapUserPreferencesStorage.java
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/preferences/InImapUserPreferencesStorage.java
+END
+UserPreferencesStorage.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/preferences/UserPreferencesStorage.java
+END

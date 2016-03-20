@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/guice/providers
+END
+DefaultUserSettingsProvider.java
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/guice/providers/DefaultUserSettingsProvider.java
+END
+LogProvider.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/guice/providers/LogProvider.java
+END
+HttpSessionProvider.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/guice/providers/HttpSessionProvider.java
+END

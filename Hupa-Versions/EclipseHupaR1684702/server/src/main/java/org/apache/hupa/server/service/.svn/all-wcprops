@@ -1,0 +1,239 @@
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/repos/asf/!svn/ver/1683360/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/service
+END
+GetMessageRawServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/service/GetMessageRawServiceImpl.java
+END
+DeleteFolderServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/service/DeleteFolderServiceImpl.java
+END
+CheckSessionService.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/service/CheckSessionService.java
+END
+CreateFolderServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/service/CreateFolderServiceImpl.java
+END
+ImapFolderService.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/service/ImapFolderService.java
+END
+SendForwardMessageService.java
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/service/SendForwardMessageService.java
+END
+LoginUserServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/service/LoginUserServiceImpl.java
+END
+GetMessageDetailsService.java
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/service/GetMessageDetailsService.java
+END
+LogoutUserServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/service/LogoutUserServiceImpl.java
+END
+FetchFoldersServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/service/FetchFoldersServiceImpl.java
+END
+GetMessageRawService.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/service/GetMessageRawService.java
+END
+SendMessageService.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/service/SendMessageService.java
+END
+DeleteFolderService.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/service/DeleteFolderService.java
+END
+CreateFolderService.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/service/CreateFolderService.java
+END
+AbstractService.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/service/AbstractService.java
+END
+FetchMessagesServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/service/FetchMessagesServiceImpl.java
+END
+LoginUserService.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/service/LoginUserService.java
+END
+SetFlagServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/service/SetFlagServiceImpl.java
+END
+FetchFoldersService.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/service/FetchFoldersService.java
+END
+LogoutUserService.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/service/LogoutUserService.java
+END
+SendMessageBaseServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/service/SendMessageBaseServiceImpl.java
+END
+FetchMessagesService.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/service/FetchMessagesService.java
+END
+DeleteMessageAllServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/service/DeleteMessageAllServiceImpl.java
+END
+DeleteMessageBaseServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/service/DeleteMessageBaseServiceImpl.java
+END
+SetFlagService.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/service/SetFlagService.java
+END
+RenameFolderServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/service/RenameFolderServiceImpl.java
+END
+DeleteMessageByUidServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/service/DeleteMessageByUidServiceImpl.java
+END
+SendReplyMessageServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/service/SendReplyMessageServiceImpl.java
+END
+MoveMessageServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/service/MoveMessageServiceImpl.java
+END
+FetchMessagesBaseServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/service/FetchMessagesBaseServiceImpl.java
+END
+DeleteMessageAllService.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/service/DeleteMessageAllService.java
+END
+CheckSessionServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/service/CheckSessionServiceImpl.java
+END
+RenameFolderService.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/service/RenameFolderService.java
+END
+ImapFolderServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/service/ImapFolderServiceImpl.java
+END
+DeleteMessageByUidService.java
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/service/DeleteMessageByUidService.java
+END
+SendForwardMessageServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/service/SendForwardMessageServiceImpl.java
+END
+SendReplyMessageService.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/service/SendReplyMessageService.java
+END
+MoveMessageService.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/service/MoveMessageService.java
+END
+GetMessageDetailsServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/repos/asf/!svn/ver/1683360/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/service/GetMessageDetailsServiceImpl.java
+END

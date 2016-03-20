@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/utils
+END
+ConfigurationProperties.java
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/utils/ConfigurationProperties.java
+END
+SessionUtils.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/utils/SessionUtils.java
+END
+MessageUtils.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/utils/MessageUtils.java
+END
+SettingsDiscoverer.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/utils/SettingsDiscoverer.java
+END
+RegexPatterns.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/utils/RegexPatterns.java
+END

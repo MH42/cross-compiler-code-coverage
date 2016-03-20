@@ -1,0 +1,704 @@
+/****************************************************************
+ * Licensed to the Apache Software Foundation (ASF) under one   *
+ * or more contributor license agreements.  See the NOTICE file *
+ * distributed with this work for additional information        *
+ * regarding copyright ownership.  The ASF licenses this file   *
+ * to you under the Apache License, Version 2.0 (the            *
+ * "License"); you may not use this file except in compliance   *
+ * with the License.  You may obtain a copy of the License at   *
+ *                                                              *
+ *   http://www.apache.org/licenses/LICENSE-2.0                 *
+ *                                                              *
+ * Unless required by applicable law or agreed to in writing,   *
+ * software distributed under the License is distributed on an  *
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY       *
+ * KIND, either express or implied.  See the License for the    *
+ * specific language governing permissions and limitations      *
+ * under the License.                                           *
+ ****************************************************************/
+
+package org.apache.hupa.client.ui;
+
+
+import tc3.shared.InstrumentationLoggerProvider;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+
+import org.apache.hupa.client.HupaConstants;
+import org.apache.hupa.client.HupaController;
+import org.apache.hupa.client.activity.ToolBarActivity;
+import org.apache.hupa.client.bundles.HupaImageBundle;
+import org.apache.hupa.client.place.FolderPlace;
+import org.apache.hupa.client.place.MessagePlace;
+import org.apache.hupa.client.rf.HupaRequestFactory;
+import org.apache.hupa.shared.data.MessageImpl.IMAPFlag;
+import org.apache.hupa.shared.domain.FetchMessagesResult;
+import org.apache.hupa.shared.domain.Message;
+import org.apache.hupa.shared.events.MessageListRangeChangedEvent;
+
+import com.google.gwt.cell.client.CheckboxCell;
+import com.google.gwt.cell.client.DateCell;
+import com.google.gwt.cell.client.FieldUpdater;
+import com.google.gwt.cell.client.ImageResourceCell;
+import com.google.gwt.cell.client.SafeHtmlCell;
+import com.google.gwt.cell.client.ValueUpdater;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
+import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.place.shared.Place;
+import com.google.gwt.place.shared.PlaceController;
+import com.google.gwt.resources.client.ImageResource;
+import com.google.gwt.safehtml.shared.SafeHtml;
+import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
+import com.google.gwt.safehtml.shared.SafeHtmlUtils;
+import com.google.gwt.user.cellview.client.Column;
+import com.google.gwt.user.cellview.client.ColumnSortEvent.AsyncHandler;
+import com.google.gwt.user.cellview.client.ColumnSortList.ColumnSortInfo;
+import com.google.gwt.user.cellview.client.DataGrid;
+import com.google.gwt.user.cellview.client.Header;
+import com.google.gwt.user.cellview.client.RowStyles;
+import com.google.gwt.view.client.AsyncDataProvider;
+import com.google.gwt.view.client.DefaultSelectionEventManager;
+import com.google.gwt.view.client.HasData;
+import com.google.gwt.view.client.MultiSelectionModel;
+import com.google.gwt.view.client.ProvidesKey;
+import com.google.gwt.view.client.Range;
+import com.google.inject.Inject;
+
+public class MessagesCellTable extends DataGrid<Message> {
+
+    static {
+	  InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f552dd1b3820x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f552dd1b3820x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f552dd1b3820x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f552dd1b382_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f552dd1b3820x4_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f552dd1b3820x3");
+	}
+	
+
+	@Inject private ToolBarActivity.Displayable toolBar;
+    @Inject protected HupaController hc;
+    @Inject EventBus eventBus;
+    private String folderName;
+    private String searchValue;
+
+    public static final int PAGE_SIZE = 100;
+
+    private HupaImageBundle imageBundle;
+    CheckboxColumn checkboxCol = new CheckboxColumn();
+    Column<Message, ?> fromCol;
+    Column<Message, ?> subjectCol;
+    Column<Message, ?> attachedCol;
+    Column<Message, ?> dateCol;
+
+    public interface Resources extends DataGrid.Resources {
+
+        Resources INSTANCE = GWT.create(Resources.class);
+
+        @Source("res/CssMessagesCellTable.css")
+        CustomStyle dataGridStyle();
+    }
+
+    public interface CustomStyle extends Style {
+        String fontBold();
+        String fontNormal();
+    }
+
+    public CheckboxColumn getCheckboxCol() {
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55146133db0x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55146133db0x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55146133db0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55146133db");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55146133db0x20x0");
+		return checkboxCol;
+    }
+
+    public final ProvidesKey<Message> KEY_PROVIDER = new ProvidesKey<Message>() {
+        @Override
+        public Object getKey(Message item) {
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f553e18f4190x30x00x1ff84286f");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f553e18f4190x30x00x1ff84286f0x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f553e18f4190x30x00x1ff84286f0x3_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f553e18f4190x30x00x1ff84286f0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f553e18f4190x30x00x1ff84286f0x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f553e18f4190x30x00x1ff84286f0x20x0");
+			if(item == null)InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f553e18f4190x30x00x1ff84286f0x30x00x00x1");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f553e18f4190x30x00x1ff84286f0x30x00x0");
+			if(!(item == null))InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f553e18f4190x30x00x1ff84286f0x30x00x00x2");
+			return item == null ? null : item.getUid();
+        }
+    };
+    private final MultiSelectionModel<? super Message> selectionModel = new MultiSelectionModel<Message>(KEY_PROVIDER);
+
+    PlaceController pc;
+    HupaRequestFactory rf;
+
+    protected MessageListDataProvider dataProvider;
+
+    public class MessageListDataProvider extends AsyncDataProvider<Message> implements HasRefresh {
+
+        HasData<Message> display;
+
+        @Override
+        public void addDataDisplay(HasData<Message> display) {
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e685b546c04");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e685b546c040x3_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e685b546c040x20x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e685b546c040x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e685b546c040x20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e685b546c040x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e685b546c040x20x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e685b546c040x2");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e685b546c040x30x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e685b546c040x30x0");
+			super.addDataDisplay(display);
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e685b546c040x30x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e685b546c040x30x1");
+			this.display = display;
+        }
+
+        @Override
+        public void refresh() {
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6826b56c1b0x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6826b56c1b0x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6826b56c1b0x0");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6826b56c1b");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6826b56c1b0x20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6826b56c1b0x20x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6826b56c1b0x20x00x0");
+			this.onRangeChanged(display);
+        }
+
+        public void setFechMessagesResult(FetchMessagesResult response) {
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6818f5be920x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6818f5be920x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6818f5be92_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6818f5be920x3_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6818f5be920x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6818f5be920x20x0");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6818f5be920x30x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6818f5be920x30x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6818f5be920x30x00x00x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6818f5be920x30x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6818f5be920x30x00x00x1");
+			if (response == null || response.getRealCount() == 0) {
+                InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6818f5be920x30x00x1");
+				InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6818f5be920x30x00x10x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6818f5be920x30x00x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6818f5be920x30x00x10x00x00x0");
+				updateRowCount(-1, true);
+            } else {
+                InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6818f5be920x30x00x2");
+				InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6818f5be920x30x00x20x00x20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6818f5be920x30x00x20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6818f5be920x30x00x20x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6818f5be920x30x00x20x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6818f5be920x30x00x20x00x10x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6818f5be920x30x00x20x00x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6818f5be920x30x00x20x00x10x0");
+				final List<Message> messages = response.getMessages();
+                InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6818f5be920x30x00x20x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6818f5be920x30x00x20x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6818f5be920x30x00x20x10x00x0");
+				updateRowCount(response.getRealCount(), true);
+                InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6818f5be920x30x00x20x20x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6818f5be920x30x00x20x20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6818f5be920x30x00x20x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6818f5be920x30x00x20x20x00x00x0");
+				updateRowData(display.getVisibleRange().getStart(), messages);
+                InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6818f5be920x30x00x20x3_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6818f5be920x30x00x20x30x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6818f5be920x30x00x20x30x00x0");
+				getColumnSortList().push(dateCol);
+            }
+        }
+
+        @Override
+        protected void onRangeChanged(final HasData<Message> display) {
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e689a0567920x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e689a0567920x3_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e689a0567920x20x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e689a0567920x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e689a0567920x20x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e689a0567920x20x10x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e689a0567920x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e689a0567920x20x0");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e689a056792");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e689a0567920x30x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e689a0567920x30x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e689a0567920x30x00x00x10x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e689a0567920x30x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e689a0567920x30x00x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e689a0567920x30x00x00x10x0");
+			Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+                public void execute() {
+                    InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e689a0567920x30x00x00x10x139ae89e0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e689a0567920x30x00x00x10x139ae89e00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e689a0567920x30x00x00x10x139ae89e00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e689a0567920x30x00x00x10x139ae89e00x2");
+					InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e689a0567920x30x00x00x10x139ae89e00x20x00x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e689a0567920x30x00x00x10x139ae89e00x20x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e689a0567920x30x00x00x10x139ae89e00x20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e689a0567920x30x00x00x10x139ae89e00x20x00x00x0");
+					eventBus.fireEvent(new MessageListRangeChangedEvent(
+                            display.getVisibleRange().getStart(),
+                            display.getVisibleRange().getLength(),
+                            searchValue));
+                }
+            });
+        }
+
+    }
+
+    public void setSearchValue(String searchValue) {
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f551505f8aa0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f551505f8aa0x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f551505f8aa0x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f551505f8aa0x20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f551505f8aa0x3_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f551505f8aa");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f551505f8aa0x30x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f551505f8aa0x30x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0");
+		this.searchValue = searchValue;
+    }
+
+    public final class CheckboxHeader extends Header<Boolean> {
+
+        private final MultiSelectionModel<? super Message> selectionModel;
+        private final AsyncDataProvider<Message> provider;
+
+        public CheckboxHeader(MultiSelectionModel<? super Message> selectionModel, AsyncDataProvider<Message> provider) {
+            super(new CheckboxCell());
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869b0x10x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869b0x10x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869b_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869b0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869b0x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869b0x1");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f556f9b9af30x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f556f9b9af30x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f556f9b9af3");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f21710fc6f0x20x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f21710fc6f0x20x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f21710fc6f_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f21710fc6f0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f21710fc6f0x3_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f21710fc6f0x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f21710fc6f0x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f21710fc6f0x20x0");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f290c5d1350x20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f290c5d1350x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f290c5d1350x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f290c5d135_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f290c5d1350x3_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f290c5d1350x20x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f290c5d1350x2");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f20x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f20x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f20x20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f20x20x1");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f278bf61930x3_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f278bf61930x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f278bf61930x10x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f278bf61930x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f278bf61930x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f278bf61930x20x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f278bf61930x20x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f278bf6193_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f278bf61930x20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f278bf61930x10x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f278bf61930x10x00x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f278bf61930x0");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f278bf61930x30x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f278bf61930x30x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f278bf61930x30x00x0");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f278bf61930x30x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f278bf61930x30x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f278bf61930x30x20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f278bf61930x30x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6859b189070x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6859b18907_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6859b189070x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6859b189070x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6859b189070x00x0");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fde2e56a0x30x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fde2e56a0x30x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fde2e56a0x20x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fde2e56a0x3_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fde2e56a0x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fde2e56a0x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fde2e56a0x30x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fde2e56a_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fde2e56a0x20x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fde2e56a0x20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fde2e56a0x30x00x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fde2e56a0x0");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55793d6d7c_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55793d6d7c0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55793d6d7c0x1");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5522ee00970x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5522ee0097_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5522ee00970x1");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f558e584a87_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f558e584a870x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f558e584a870x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f558e584a870x1");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e68_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e680x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e680x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e680x10x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e680x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e680x10x0");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f553e18f4190x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f553e18f4190x20x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f553e18f4190x3_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f553e18f4190x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f553e18f419_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f553e18f4190x30x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f553e18f4190x30x00x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f553e18f4190x30x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f553e18f4190x20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f553e18f4190x30x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f553e18f4190x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f553e18f4190x30x00x0");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f557d6008c3_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f557d6008c30x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f557d6008c30x0");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5587df60dee29879220x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5587df60dee29879220x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5587df60dee29879220x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5587df60dee2987922");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5587df60de0x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5587df60de0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5587df60de");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55b9509be80x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55b9509be80x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55b9509be8_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55b9509be80x2");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55b178ba090x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55b178ba09_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55b178ba090x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55b178ba090x10x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55b178ba090x1");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55a44439ba_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55a44439ba0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55a44439ba0x00x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55a44439ba0x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55a44439ba0x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55a44439ba0x00x0");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55db0b8f77_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55db0b8f770x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55db0b8f770x00x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55db0b8f770x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55db0b8f770x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55db0b8f770x1");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55de2f63b0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55de2f63b00x00x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55de2f63b00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55de2f63b00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55de2f63b00x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55de2f63b00x00x0");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55594cfb9a0x00x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55594cfb9a0x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55594cfb9a0x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55594cfb9a0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55594cfb9a0x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55594cfb9a");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55978c9f3f_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55978c9f3f0x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55978c9f3f0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55978c9f3f0x2");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d86e873f0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d86e873f0x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d86e873f_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d86e873f0x2");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f550x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f550x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f550x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f550x10x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f551632733a0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f551632733a_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f551632733a0x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f551632733a0x1");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d1eb2f3e_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d1eb2f3e0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d1eb2f3e0x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d1eb2f3e0x2");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5599b14ede0x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5599b14ede_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5599b14ede0x0");
+            this.selectionModel = selectionModel;
+            this.provider = provider;
+        }
+
+        @Override
+        public Boolean getValue() {
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f22ee20406");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f22ee204060x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f22ee204060x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f22ee204060x1");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f22ee204060x20x00x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f22ee204060x20x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f22ee204060x20x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f22ee204060x20x0");
+			if (selectionModel == null || provider == null) {
+                InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f22ee204060x20x00x1");
+				InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f22ee204060x20x00x10x0");
+				return false;
+            }
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f22ee204060x20x10x00x10x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f22ee204060x20x10x00x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f22ee204060x20x10x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f22ee204060x20x10x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f22ee204060x20x10x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f22ee204060x20x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f22ee204060x20x10x00x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f22ee204060x20x1");
+			if (selectionModel.getSelectedSet().size() == 0 || provider.getDataDisplays().size() == 0) {
+                InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f22ee204060x20x10x1");
+				InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f22ee204060x20x10x10x0");
+				return false;
+            }
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f22ee204060x20x20x10x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f22ee204060x20x20x10x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f22ee204060x20x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f22ee204060x20x20x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f22ee204060x20x20x10x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f22ee204060x20x20x10x00x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f22ee204060x20x20x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f22ee204060x20x20x0");
+			boolean allItemsSelected = selectionModel.getSelectedSet().size() == provider.getDataDisplays().size();
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f22ee204060x20x3");
+			return allItemsSelected;
+        }
+
+//        @Override
+//        public void onBrowserEvent(Context context, Element elem, NativeEvent event) {
+//            InputElement input = elem.getFirstChild().cast();
+//            Boolean isChecked = input.isChecked();
+//            List<Message> displayedItems = MessagesCellTable.this.getVisibleItems();
+//            for (Message element : displayedItems) {
+//                selectionModel.setSelected(element, isChecked);
+//                checkboxCol.getFieldUpdater().update(0, element, isChecked);
+//            }
+//        }
+
+    }
+
+    @Override
+    protected void onAttach() {
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f555cd6b07b");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f555cd6b07b0x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f555cd6b07b0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f555cd6b07b0x2");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f555cd6b07b0x20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f555cd6b07b0x20x00x0");
+		super.onAttach();
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f555cd6b07b0x20x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f555cd6b07b0x20x10x0");
+		if (dataProvider == null) {
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f555cd6b07b0x20x10x1");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f555cd6b07b0x20x10x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f555cd6b07b0x20x10x10x00x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f555cd6b07b0x20x10x10x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f555cd6b07b0x20x10x10x00x00x0");
+			dataProvider = new MessageListDataProvider();
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f555cd6b07b0x20x10x10x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f555cd6b07b0x20x10x10x10x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f555cd6b07b0x20x10x10x10x0");
+			dataProvider.addDataDisplay(this);
+        }
+    }
+
+    @Inject
+    public MessagesCellTable(final HupaImageBundle imageBundle, final HupaConstants constants,
+            final PlaceController pc, final HupaRequestFactory rf) {
+        super(PAGE_SIZE, Resources.INSTANCE);
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869b0x10x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869b0x10x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869b_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869b0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869b0x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869b0x1");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f556f9b9af30x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f556f9b9af30x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f556f9b9af3");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x210x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x21");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x200x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x20");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x1d0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x1d");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x1c0x10x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x1c0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x1c0x10x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x1c0x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x1c_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x1c0x1");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x1f_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x1f0x0");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x1e0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x1e");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x1b0x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x1b_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x1b0x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x1b0x0");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x180x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x18_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x180x0");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x1a_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x1a0x0");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x190x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x19");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50xa0x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50xa0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50xa");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x90x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x90x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x9");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50xc0x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50xc0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50xc");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50xb_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50xb0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50xb0x00x0");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50xd0x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50xd_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50xd0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50xd0x00x0");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50xf0x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50xf0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50xf");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50xe0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50xe");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x110x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x11_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x110x00x0");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x100x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x10");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x13_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x130x0");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x12_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x120x0");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x15_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x150x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x150x00x0");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x14_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x140x0");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x17_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x170x0");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x16_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x160x0");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x7_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x70x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x70x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x70x10x00x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x70x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x70x10x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x70x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x70x10x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x70x10x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x70x00x0");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x80x00x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x8_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x80x00x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x80x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x80x00x00x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x80x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x80x00x0");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x0");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x40x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x5_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x40x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x30x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x4_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x30x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x3");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x30x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x3_____org_apache_hupa_client_ui_MessagesCellTable_java0x0");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x2");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x10x0");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x60x10x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x60x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x60x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x60x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x60x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x60x10x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x6_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x60x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x60x10x00x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x60x10x00x0");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x5_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x50x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x50x10x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x50x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x50x0");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x40x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x4_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x40x10x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x40x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x40x0");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f21710fc6f0x20x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f21710fc6f0x20x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f21710fc6f_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f21710fc6f0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f21710fc6f0x3_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f21710fc6f0x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f21710fc6f0x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f21710fc6f0x20x0");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f290c5d1350x20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f290c5d1350x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f290c5d1350x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f290c5d135_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f290c5d1350x3_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f290c5d1350x20x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f290c5d1350x2");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f20x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f20x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f20x20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f20x20x1");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6859b189070x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6859b18907_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6859b189070x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6859b189070x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6859b189070x00x0");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fde2e56a0x30x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fde2e56a0x30x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fde2e56a0x20x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fde2e56a0x3_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fde2e56a0x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fde2e56a0x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fde2e56a0x30x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fde2e56a_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fde2e56a0x20x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fde2e56a0x20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fde2e56a0x30x00x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fde2e56a0x0");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55793d6d7c_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55793d6d7c0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55793d6d7c0x1");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5522ee00970x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5522ee0097_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5522ee00970x1");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f558e584a87_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f558e584a870x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f558e584a870x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f558e584a870x1");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e68_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e680x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e680x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e680x10x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e680x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e680x10x0");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f553e18f4190x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f553e18f4190x20x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f553e18f4190x3_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f553e18f4190x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f553e18f419_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f553e18f4190x30x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f553e18f4190x30x00x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f553e18f4190x30x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f553e18f4190x20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f553e18f4190x30x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f553e18f4190x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f553e18f4190x30x00x0");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f557d6008c3_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f557d6008c30x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f557d6008c30x0");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5587df60dee29879220x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5587df60dee29879220x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5587df60dee29879220x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5587df60dee2987922");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5587df60de0x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5587df60de0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5587df60de");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55b9509be80x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55b9509be80x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55b9509be8_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55b9509be80x2");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55b178ba090x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55b178ba09_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55b178ba090x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55b178ba090x10x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55b178ba090x1");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55a44439ba_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55a44439ba0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55a44439ba0x00x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55a44439ba0x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55a44439ba0x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55a44439ba0x00x0");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55db0b8f77_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55db0b8f770x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55db0b8f770x00x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55db0b8f770x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55db0b8f770x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55db0b8f770x1");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55de2f63b0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55de2f63b00x00x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55de2f63b00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55de2f63b00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55de2f63b00x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55de2f63b00x00x0");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55594cfb9a0x00x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55594cfb9a0x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55594cfb9a0x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55594cfb9a0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55594cfb9a0x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55594cfb9a");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55978c9f3f_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55978c9f3f0x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55978c9f3f0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55978c9f3f0x2");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d86e873f0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d86e873f0x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d86e873f_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d86e873f0x2");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f550x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f550x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f550x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f550x10x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f551632733a0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f551632733a_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f551632733a0x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f551632733a0x1");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d1eb2f3e_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d1eb2f3e0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d1eb2f3e0x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d1eb2f3e0x2");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5599b14ede0x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5599b14ede_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5599b14ede0x0");
+        this.pc = pc;
+        this.rf = rf;
+        this.imageBundle = imageBundle;
+
+        CheckboxCell headerCheckbox = new CheckboxCell();
+        ImageResourceCell headerAttached = new ImageResourceCell();
+        Header<Boolean> header = new Header<Boolean>(headerCheckbox) {
+            @Override
+            public Boolean getValue() {
+                InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x60x10x00x12ee20406");
+				InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x60x10x00x12ee204060x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x60x10x00x12ee204060x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x60x10x00x12ee204060x1");
+				InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x60x10x00x12ee204060x20x0");
+				return false;
+            }
+        };
+        Header<ImageResource> attachedPin = new Header<ImageResource>(headerAttached) {
+            @Override
+            public ImageResource getValue() {
+                InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x70x10x00x12ee20406");
+				InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x70x10x00x12ee204060x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x70x10x00x12ee204060x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x70x10x00x12ee204060x0");
+				InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x70x10x00x12ee204060x20x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x70x10x00x12ee204060x20x0");
+				return imageBundle.attachmentIcon();
+            }
+        };
+        header.setUpdater(new ValueUpdater<Boolean>() {
+            @Override
+            public void update(Boolean value) {
+                InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x80x00x00x1da616ffb");
+				InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x80x00x00x1da616ffb0x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x80x00x00x1da616ffb0x20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x80x00x00x1da616ffb0x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x80x00x00x1da616ffb0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x80x00x00x1da616ffb0x3");
+				InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x80x00x00x1da616ffb0x30x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x80x00x00x1da616ffb0x30x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x80x00x00x1da616ffb0x30x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x80x00x00x1da616ffb0x30x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x80x00x00x1da616ffb0x30x00x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x80x00x00x1da616ffb0x30x00x10x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x80x00x00x1da616ffb0x30x00x00x1");
+				List<Message> displayedItems = MessagesCellTable.this.getVisibleItems();
+                InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x80x00x00x1da616ffb0x30x10x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x80x00x00x1da616ffb0x30x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x80x00x00x1da616ffb0x30x10x0");
+				for (Message msg : displayedItems) {
+                    InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x80x00x00x1da616ffb0x30x10x1");
+					InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x80x00x00x1da616ffb0x30x10x10x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x80x00x00x1da616ffb0x30x10x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ff18ffcf0x50x80x00x00x1da616ffb0x30x10x10x00x0");
+					checkboxCol.getFieldUpdater().update(0, msg, value);
+                }
+            }
+        });
+
+        fromCol = getFromColumn();
+        subjectCol = getSubjectColumn();
+        attachedCol = getAttachmentColumn();
+        dateCol = getDateColumn();
+
+        addColumn(checkboxCol, new CheckboxHeader(selectionModel, dataProvider));
+        setColumnWidth(checkboxCol, 3, Unit.EM);
+        addColumn(fromCol, constants.mailTableFrom());
+        setColumnWidth(fromCol, 40, Unit.PCT);
+        addColumn(subjectCol, constants.mailTableSubject());
+        setColumnWidth(subjectCol, 60, Unit.PCT);
+        addColumn(attachedCol, attachedPin);
+        setColumnWidth(attachedCol, 33, Unit.PX);
+        addColumn(dateCol, constants.mailTableDate());
+        setColumnWidth(dateCol, 10, Unit.EM);
+        setRowCount(PAGE_SIZE, false);
+        this.setStyleBaseOnTag();
+        // redraw();
+        setKeyboardSelectionPolicy(KeyboardSelectionPolicy.DISABLED);
+        setAutoHeaderRefreshDisabled(true);
+
+        setSelectionModel(selectionModel, DefaultSelectionEventManager.<Message> createBlacklistManager(0));
+
+        // make table sortable
+        AsyncHandler columnSortHandler = new AsyncHandler(this);
+        addColumnSortHandler(columnSortHandler);
+        fromCol.setSortable(true);
+        subjectCol.setSortable(true);
+        attachedCol.setSortable(true);
+        dateCol.setSortable(true);
+    }
+
+    // TODO: this should be perform in the server side, but in the meanwhile it
+    // is useful
+    // some kind of sorting in client side.
+    @Override
+    public void setVisibleRangeAndClearData(Range range, boolean forceRangeChangeEvent) {
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x4_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x3_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x30x0");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x00x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x00x20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x00x20x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x00x0");
+		final ColumnSortInfo sortInfo = getColumnSortList().get(0);
+
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x10x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x10x10x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x10x10x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x10x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x10x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x10x10x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x10x10x00x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x10x10x0");
+		List<Message> sortedList = new ArrayList<Message>(getVisibleItems());
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1");
+		Collections.sort(sortedList, new Comparator<Message>() {
+            public int compare(Message o1, Message o2) {
+                InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x3_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x4_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x30x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x20x0");
+				InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x00x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x00x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x00x00x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x00x00x0");
+				Column<?, ?> column = sortInfo.getColumn();
+                InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x10x10x0");
+				if(sortInfo.isAscending())InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x10x10x00x1");
+				if(!(sortInfo.isAscending()))InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x10x10x00x2");
+				Message a = sortInfo.isAscending() ? o1 : o2;
+                if(sortInfo.isAscending())InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x20x10x00x1");
+				InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x20x10x0");
+				if(!(sortInfo.isAscending()))InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x20x10x00x2");
+				Message b = sortInfo.isAscending() ? o2 : o1;
+                InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x30x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x3");
+				if (fromCol.equals(column)) {
+                    InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x30x1");
+					InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x30x10x00x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x30x10x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x30x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x30x10x00x0");
+					return a.getFrom().compareToIgnoreCase(b.getFrom());
+                }
+                InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x4_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x40x0");
+				if (attachedCol.equals(column)) {
+                    InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x40x1");
+					InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x40x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x40x10x00x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x40x10x00x00x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x40x10x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x40x10x00x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x40x10x00x0");
+					return Boolean.valueOf(a.hasAttachment()).compareTo(Boolean.valueOf(b.hasAttachment()));
+                }
+                InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x5_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x50x0");
+				if (dateCol.equals(column)) {
+                    InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x50x1");
+					InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x50x10x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x50x10x00x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x50x10x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x50x10x0");
+					return a.getReceivedDate().compareTo(b.getReceivedDate());
+                }
+                InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x6_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x60x0");
+				if (subjectCol.equals(column)) {
+                    InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x60x1");
+					InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x60x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x60x10x00x10x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x60x10x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x60x10x00x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x60x10x00x1");
+					// Remove Re & Fwd, using ugly regex since replaceAll is not
+                    // case-insensitive in client side.
+                    String s1 = a.getSubject().replaceAll("^([Rr][Ee]|[Ff][Ww][Dd]): (.+)$", "$2 ");
+                    InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x60x10x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x60x10x10x10x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x60x10x10x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x60x10x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x60x10x10x10x0");
+					String s2 = b.getSubject().replaceAll("^([Rr][Ee]|[Ff][Ww][Dd]): (.+)$", "$2 ");
+                    InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x60x10x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x60x10x20x0");
+					return s1.compareTo(s2);
+                }
+                InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x20x00x00x1dd6e455a0x40x7");
+				return 0;
+            }
+        });
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x30x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x30x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55e3e501be0x40x3");
+		dataProvider.updateRowData(range.getStart(), sortedList);
+    }
+
+    public String parseFolderName(final PlaceController pc) {
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d7b632bc0x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d7b632bc0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d7b632bc_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d7b632bc0x20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d7b632bc0x20x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d7b632bc0x3_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d7b632bc0x2");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d7b632bc0x30x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d7b632bc0x30x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d7b632bc0x30x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d7b632bc0x30x00x10x0");
+		Place place = pc.getWhere();
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d7b632bc0x30x10x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d7b632bc0x30x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d7b632bc0x30x10x0");
+		if (place instanceof FolderPlace) {
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d7b632bc0x30x10x1");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d7b632bc0x30x10x10x00x00x00x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d7b632bc0x30x10x10x00x00x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d7b632bc0x30x10x10x00x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d7b632bc0x30x10x10x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d7b632bc0x30x10x10x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d7b632bc0x30x10x10x0");
+			folderName = ((FolderPlace) place).getToken();
+        } else if (place instanceof MessagePlace) {
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d7b632bc0x30x10x2");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d7b632bc0x30x10x20x1");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d7b632bc0x30x10x20x10x00x00x00x00x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d7b632bc0x30x10x20x10x00x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d7b632bc0x30x10x20x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d7b632bc0x30x10x20x10x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d7b632bc0x30x10x20x10x00x00x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d7b632bc0x30x10x20x10x00x00x00x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d7b632bc0x30x10x20x10x00x0");
+			folderName = ((MessagePlace) place).getTokenWrapper().getFolder();
+        }
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d7b632bc0x30x2");
+		return folderName;
+    }
+
+    Message message; // the object selected by selectionModel
+
+    public String getMessageStyle(Message row) {
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f552bf4d4a4_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f552bf4d4a40x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f552bf4d4a40x20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f552bf4d4a40x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f552bf4d4a40x3_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f552bf4d4a40x2");
+		if(!(haveRead(row)))InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f552bf4d4a40x30x00x00x2");
+		if(haveRead(row))InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f552bf4d4a40x30x00x00x1");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f552bf4d4a40x30x00x0");
+		return haveRead(row) ? getReadStyle() : getUnreadStyle();
+    }
+    private String getUnreadStyle() {
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55918607d70x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55918607d70x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55918607d7_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55918607d70x0");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55918607d70x20x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55918607d70x20x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55918607d70x20x0");
+		return Resources.INSTANCE.dataGridStyle().fontBold();
+    }
+
+    private String getReadStyle() {
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f556250bef8_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f556250bef80x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f556250bef80x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f556250bef80x0");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f556250bef80x20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f556250bef80x20x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f556250bef80x20x00x0");
+		return Resources.INSTANCE.dataGridStyle().fontNormal();
+    }
+
+    private boolean haveRead(Message row) {
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55cfbe56630x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55cfbe56630x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55cfbe56630x20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55cfbe56630x3_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55cfbe5663_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55cfbe56630x0");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55cfbe56630x30x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55cfbe56630x30x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55cfbe56630x30x00x00x0");
+		return row.getFlags().contains(IMAPFlag.SEEN);
+    }
+    public void markRead(final Message message, final boolean read) {
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5595f998cc0x30x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5595f998cc0x30x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5595f998cc0x20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5595f998cc0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5595f998cc_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5595f998cc0x20x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5595f998cc0x4_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5595f998cc0x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5595f998cc0x3_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5595f998cc0x1");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5595f998cc0x40x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5595f998cc0x40x00x0");
+		flush();
+    }
+
+    public class CheckboxColumn extends Column<Message, Boolean> {
+
+        public CheckboxColumn() {
+            super(new CheckboxCell(false, false));
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869b0x10x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869b0x10x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869b_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869b0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869b0x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869b0x1");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bef1b869b0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bef1b869b0x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bef1b869b");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bef1b869b0x10x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bef1b869b0x10x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bef1b869b0x10x0");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bef1b869b0x10x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bef1b869b0x10x10x00x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bef1b869b0x10x10x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bef1b869b0x10x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bef1b869b0x10x10x00x00x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bef1b869b0x10x10x00x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bef1b869b0x10x10x00x00x00x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bef1b869b0x10x10x00x0");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f556f9b9af30x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f556f9b9af30x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f556f9b9af3");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f21710fc6f0x20x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f21710fc6f0x20x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f21710fc6f_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f21710fc6f0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f21710fc6f0x3_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f21710fc6f0x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f21710fc6f0x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f21710fc6f0x20x0");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f290c5d1350x20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f290c5d1350x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f290c5d1350x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f290c5d135_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f290c5d1350x3_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f290c5d1350x20x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f290c5d1350x2");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f20x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f20x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f20x20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55109e14f20x20x1");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6859b189070x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6859b18907_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6859b189070x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6859b189070x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e6859b189070x00x0");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fde2e56a0x30x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fde2e56a0x30x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fde2e56a0x20x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fde2e56a0x3_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fde2e56a0x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fde2e56a0x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fde2e56a0x30x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fde2e56a_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fde2e56a0x20x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fde2e56a0x20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fde2e56a0x30x00x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fde2e56a0x0");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55793d6d7c_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55793d6d7c0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55793d6d7c0x1");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5522ee00970x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5522ee0097_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5522ee00970x1");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f558e584a87_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f558e584a870x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f558e584a870x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f558e584a870x1");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e68_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e680x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e680x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e680x10x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e680x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5550524e680x10x0");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f553e18f4190x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f553e18f4190x20x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f553e18f4190x3_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f553e18f4190x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f553e18f419_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f553e18f4190x30x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f553e18f4190x30x00x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f553e18f4190x30x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f553e18f4190x20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f553e18f4190x30x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f553e18f4190x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f553e18f4190x30x00x0");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f557d6008c3_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f557d6008c30x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f557d6008c30x0");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5587df60dee29879220x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5587df60dee29879220x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5587df60dee29879220x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5587df60dee2987922");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5587df60de0x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5587df60de0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5587df60de");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55b9509be80x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55b9509be80x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55b9509be8_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55b9509be80x2");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55b178ba090x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55b178ba09_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55b178ba090x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55b178ba090x10x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55b178ba090x1");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55a44439ba_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55a44439ba0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55a44439ba0x00x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55a44439ba0x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55a44439ba0x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55a44439ba0x00x0");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55db0b8f77_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55db0b8f770x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55db0b8f770x00x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55db0b8f770x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55db0b8f770x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55db0b8f770x1");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55de2f63b0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55de2f63b00x00x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55de2f63b00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55de2f63b00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55de2f63b00x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55de2f63b00x00x0");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55594cfb9a0x00x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55594cfb9a0x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55594cfb9a0x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55594cfb9a0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55594cfb9a0x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55594cfb9a");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55978c9f3f_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55978c9f3f0x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55978c9f3f0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55978c9f3f0x2");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d86e873f0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d86e873f0x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d86e873f_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d86e873f0x2");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f550x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f550x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f550x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f550x10x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f551632733a0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f551632733a_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f551632733a0x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f551632733a0x1");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d1eb2f3e_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d1eb2f3e0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d1eb2f3e0x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55d1eb2f3e0x2");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5599b14ede0x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5599b14ede_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5599b14ede0x0");
+            setFieldUpdater(new FieldUpdater<Message, Boolean>() {
+                @Override
+                public void update(int index, Message object, Boolean value) {
+                    InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bef1b869b0x10x10x00x00x1840b70b5");
+					InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bef1b869b0x10x10x00x00x1840b70b50x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bef1b869b0x10x10x00x00x1840b70b50x4_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bef1b869b0x10x10x00x00x1840b70b50x3_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bef1b869b0x10x10x00x00x1840b70b50x40x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bef1b869b0x10x10x00x00x1840b70b50x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bef1b869b0x10x10x00x00x1840b70b50x20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bef1b869b0x10x10x00x00x1840b70b50x5_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bef1b869b0x10x10x00x00x1840b70b50x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bef1b869b0x10x10x00x00x1840b70b50x30x0");
+					InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bef1b869b0x10x10x00x00x1840b70b50x50x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bef1b869b0x10x10x00x00x1840b70b50x50x00x0");
+					selectionModel.setSelected(object, value);
+                    InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bef1b869b0x10x10x00x00x1840b70b50x50x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bef1b869b0x10x10x00x00x1840b70b50x50x10x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bef1b869b0x10x10x00x00x1840b70b50x50x10x10x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bef1b869b0x10x10x00x00x1840b70b50x50x10x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bef1b869b0x10x10x00x00x1840b70b50x50x10x0");
+					int size = selectionModel.getSelectedSet().size();
+                    InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bef1b869b0x10x10x00x00x1840b70b50x50x20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bef1b869b0x10x10x00x00x1840b70b50x50x2");
+					if (size >= 1) {
+                        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bef1b869b0x10x10x00x00x1840b70b50x50x20x1");
+						InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bef1b869b0x10x10x00x00x1840b70b50x50x20x10x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bef1b869b0x10x10x00x00x1840b70b50x50x20x10x0");
+						toolBar.enableDealingTools(true);
+                        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bef1b869b0x10x10x00x00x1840b70b50x50x20x10x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bef1b869b0x10x10x00x00x1840b70b50x50x20x10x1");
+						toolBar.enableSendingTools(false);
+                        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bef1b869b0x10x10x00x00x1840b70b50x50x20x10x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bef1b869b0x10x10x00x00x1840b70b50x50x20x10x20x0");
+						toolBar.enableUpdatingTools(false);
+                    } else {
+                        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bef1b869b0x10x10x00x00x1840b70b50x50x20x2");
+						InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bef1b869b0x10x10x00x00x1840b70b50x50x20x20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bef1b869b0x10x10x00x00x1840b70b50x50x20x20x00x0");
+						toolBar.enableAllTools(false);
+                    }
+                }
+            });
+        }
+
+        @Override
+        public Boolean getValue(Message object) {
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bc87156fe0x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bc87156fe0x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bc87156fe0x20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bc87156fe0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bc87156fe0x3");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bc87156fe");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bc87156fe0x30x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55ef1b869bc87156fe0x30x0");
+			return selectionModel.isSelected(object);
+        }
+    }
+
+    protected Column<Message, SafeHtml> getFromColumn () {
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5556067aee0x10x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5556067aee0x10x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5556067aee_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5556067aee0x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5556067aee0x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5556067aee0x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5556067aee0x0");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5556067aee0x20x00x00x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5556067aee0x20x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5556067aee0x20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5556067aee0x20x00x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5556067aee0x20x00x00x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5556067aee0x20x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5556067aee0x20x00x00x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5556067aee0x20x00x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5556067aee0x20x00x00x00x2");
+		return new Column<Message, SafeHtml>(new SafeHtmlCell()) {
+            @Override
+            public SafeHtml getValue(Message object) {
+                InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5556067aee0x20x00x00x2c87156fe0x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5556067aee0x20x00x00x2c87156fe0x20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5556067aee0x20x00x00x2c87156fe0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5556067aee0x20x00x00x2c87156fe0x3_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5556067aee0x20x00x00x2c87156fe0x1");
+				InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5556067aee0x20x00x00x2c87156fe");
+				InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5556067aee0x20x00x00x2c87156fe0x30x00x10x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5556067aee0x20x00x00x2c87156fe0x30x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5556067aee0x20x00x00x2c87156fe0x30x00x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5556067aee0x20x00x00x2c87156fe0x30x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5556067aee0x20x00x00x2c87156fe0x30x0");
+				SafeHtmlBuilder sb = new SafeHtmlBuilder();
+                if(object.getFrom() == null)InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5556067aee0x20x00x00x2c87156fe0x30x10x00x00x00x1");
+				InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5556067aee0x20x00x00x2c87156fe0x30x10x00x00x0");
+				if(!(object.getFrom() == null))InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5556067aee0x20x00x00x2c87156fe0x30x10x00x00x00x2");
+				sb.append(SafeHtmlUtils.fromString(object.getFrom() == null ? "" : object.getFrom()));
+                InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5556067aee0x20x00x00x2c87156fe0x30x20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5556067aee0x20x00x00x2c87156fe0x30x2");
+				return sb.toSafeHtml();
+            }
+        };
+    }
+
+    protected Column<Message, SafeHtml> getSubjectColumn () {
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5530cac0080x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5530cac0080x10x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5530cac008_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5530cac0080x10x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5530cac0080x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5530cac0080x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5530cac0080x0");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5530cac0080x20x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5530cac0080x20x00x00x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5530cac0080x20x00x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5530cac0080x20x00x00x00x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5530cac0080x20x00x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5530cac0080x20x00x00x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5530cac0080x20x00x00x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5530cac0080x20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5530cac0080x20x00x00x0");
+		return new Column<Message, SafeHtml>(new SafeHtmlCell()) {
+            @Override
+            public SafeHtml getValue(Message object) {
+                InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5530cac0080x20x00x00x2c87156fe");
+				InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5530cac0080x20x00x00x2c87156fe0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5530cac0080x20x00x00x2c87156fe0x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5530cac0080x20x00x00x2c87156fe0x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5530cac0080x20x00x00x2c87156fe0x3_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5530cac0080x20x00x00x2c87156fe0x20x0");
+				InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5530cac0080x20x00x00x2c87156fe0x30x00x10x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5530cac0080x20x00x00x2c87156fe0x30x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5530cac0080x20x00x00x2c87156fe0x30x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5530cac0080x20x00x00x2c87156fe0x30x00x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5530cac0080x20x00x00x2c87156fe0x30x0");
+				SafeHtmlBuilder sb = new SafeHtmlBuilder();
+                InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5530cac0080x20x00x00x2c87156fe0x30x10x00x00x0");
+				if(object.getSubject() == null)InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5530cac0080x20x00x00x2c87156fe0x30x10x00x00x00x1");
+				if(!(object.getSubject() == null))InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5530cac0080x20x00x00x2c87156fe0x30x10x00x00x00x2");
+				sb.append(SafeHtmlUtils.fromString(object.getSubject() == null ? "" : object.getSubject()));
+                InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5530cac0080x20x00x00x2c87156fe0x30x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5530cac0080x20x00x00x2c87156fe0x30x20x0");
+				return sb.toSafeHtml();
+            }
+        };
+    }
+
+    protected Column<Message, ImageResource> getAttachmentColumn () {
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55de3eb9380x10x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55de3eb9380x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55de3eb9380x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55de3eb9380x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55de3eb938_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55de3eb9380x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55de3eb9380x10x1");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55de3eb9380x20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55de3eb9380x20x00x00x00x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55de3eb9380x20x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55de3eb9380x20x00x00x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55de3eb9380x20x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55de3eb9380x20x00x00x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55de3eb9380x20x00x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55de3eb9380x20x00x00x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55de3eb9380x20x00x00x00x0");
+		return new Column<Message, ImageResource>(new ImageResourceCell()) {
+            public ImageResource getValue(Message object) {
+                InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55de3eb9380x20x00x00x2c87156fe0x3_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55de3eb9380x20x00x00x2c87156fe0x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55de3eb9380x20x00x00x2c87156fe0x20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55de3eb9380x20x00x00x2c87156fe0x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55de3eb9380x20x00x00x2c87156fe_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55de3eb9380x20x00x00x2c87156fe0x0");
+				if(object.hasAttachment())InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55de3eb9380x20x00x00x2c87156fe0x30x00x00x1");
+				InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55de3eb9380x20x00x00x2c87156fe0x30x00x0");
+				if(!(object.hasAttachment()))InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55de3eb9380x20x00x00x2c87156fe0x30x00x00x2");
+				return object.hasAttachment() ? imageBundle.attachmentIcon() : null;
+            }
+        };
+    }
+
+    protected Column<Message, Date> getDateColumn() {
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55db3164da0x10x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55db3164da_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55db3164da0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55db3164da0x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55db3164da0x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55db3164da0x10x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55db3164da0x2");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55db3164da0x20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55db3164da0x20x00x00x10x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55db3164da0x20x00x00x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55db3164da0x20x00x00x10x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55db3164da0x20x00x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55db3164da0x20x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55db3164da0x20x00x00x00x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55db3164da0x20x00x00x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55db3164da0x20x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55db3164da0x20x00x00x00x0");
+		return new Column<Message, Date>(new DateCell(DateTimeFormat.getFormat("dd.MMM.yyyy"))) {
+            public Date getValue(Message object) {
+                InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55db3164da0x20x00x00x2c87156fe0x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55db3164da0x20x00x00x2c87156fe0x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55db3164da0x20x00x00x2c87156fe0x20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55db3164da0x20x00x00x2c87156fe0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55db3164da0x20x00x00x2c87156fe0x3_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55db3164da0x20x00x00x2c87156fe");
+				InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55db3164da0x20x00x00x2c87156fe0x30x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55db3164da0x20x00x00x2c87156fe0x30x00x0");
+				return object.getReceivedDate();
+            }
+        };
+    }
+
+    public void setStyleBaseOnTag() {
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fe754a150x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fe754a15_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fe754a150x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fe754a150x0");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fe754a150x20x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fe754a150x20x00x00x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fe754a150x20x00x00x00x00x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fe754a150x20x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fe754a150x20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fe754a150x20x00x00x00x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fe754a150x20x00x00x00x1");
+		setRowStyles(new RowStyles<Message>() {
+            @Override
+            public String getStyleNames(Message row, int rowIndex) {
+                InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fe754a150x20x00x00x00x16f4470920x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fe754a150x20x00x00x00x16f4470920x3_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fe754a150x20x00x00x00x16f4470920x20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fe754a150x20x00x00x00x16f4470920x30x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fe754a150x20x00x00x00x16f4470920x2_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fe754a150x20x00x00x00x16f4470920x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fe754a150x20x00x00x00x16f4470920x4");
+				InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fe754a150x20x00x00x00x16f447092");
+				InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fe754a150x20x00x00x00x16f4470920x40x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f55fe754a150x20x00x00x00x16f4470920x40x00x0");
+				return getMessageStyle(row);
+            }
+        });
+    }
+    public void refresh() {
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5526b56c1b0x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5526b56c1b_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5526b56c1b0x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5526b56c1b0x2");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5526b56c1b0x20x0_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5526b56c1b0x20x00x0");
+		dataProvider.refresh();
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5526b56c1b0x20x1_____org_apache_hupa_client_ui_MessagesCellTable_java0x0f2ab3f5526b56c1b0x20x10x0");
+		redrawHeaders();
+    }
+
+}

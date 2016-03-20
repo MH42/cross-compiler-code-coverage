@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/test/java/org/apache/hupa/server/service
+END
+DeleteFolderServiceTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/test/java/org/apache/hupa/server/service/DeleteFolderServiceTest.java
+END
+SendMessageServiceTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/test/java/org/apache/hupa/server/service/SendMessageServiceTest.java
+END
+CreateFolderServiceTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/test/java/org/apache/hupa/server/service/CreateFolderServiceTest.java
+END
+FetchMessagesServiceTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/test/java/org/apache/hupa/server/service/FetchMessagesServiceTest.java
+END
+DeleteMessageByUidServiceTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/test/java/org/apache/hupa/server/service/DeleteMessageByUidServiceTest.java
+END
+FetchFolderServiceTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/test/java/org/apache/hupa/server/service/FetchFolderServiceTest.java
+END
+GetMessageDetailServiceTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/test/java/org/apache/hupa/server/service/GetMessageDetailServiceTest.java
+END
+LoginUserServiceTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/test/java/org/apache/hupa/server/service/LoginUserServiceTest.java
+END
+LogoutUserServiceTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/test/java/org/apache/hupa/server/service/LogoutUserServiceTest.java
+END
+SendReplyMessageServiceTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/test/java/org/apache/hupa/server/service/SendReplyMessageServiceTest.java
+END

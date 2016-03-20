@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/repos/asf/!svn/ver/1684702/james/hupa/trunk
+END
+update_doc.sh
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/repos/asf/!svn/ver/1328468/james/hupa/trunk/update_doc.sh
+END
+.gitignore
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/repos/asf/!svn/ver/1660221/james/hupa/trunk/.gitignore
+END
+pom.xml
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/repos/asf/!svn/ver/1659104/james/hupa/trunk/pom.xml
+END
+README.txt
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/repos/asf/!svn/ver/1636808/james/hupa/trunk/README.txt
+END

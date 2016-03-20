@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/storage
+END
+AppCache.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/storage/AppCache.java
+END
+AppSerializer.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/storage/AppSerializer.java
+END
+AppCacheMemory.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/storage/AppCacheMemory.java
+END

@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/repos/asf/!svn/ver/1684702/james/hupa/trunk/client/src/main/java/org/apache/hupa/client
+END
+HupaController.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/HupaController.java
+END
+HupaConstants.properties
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/repos/asf/!svn/ver/1159202/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/HupaConstants.properties
+END
+HupaMessages.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/HupaMessages.java
+END
+HupaCSS.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/HupaCSS.java
+END
+HupaConstants.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/HupaConstants.java
+END
+HupaConstants_es.properties
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/repos/asf/!svn/ver/1159202/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/HupaConstants_es.properties
+END
+Hupa.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/Hupa.java
+END
+HupaConstants_de.properties
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/repos/asf/!svn/ver/1159202/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/HupaConstants_de.properties
+END

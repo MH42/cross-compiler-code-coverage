@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost:8282/hupa/Hupa.html" />
+<title>TestTemplate</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">TestTemplate</td></tr>
+</thead><tbody>
+<!--BeforeTest-->
+<tr>
+	<td>storeEval</td>
+	<td>&quot;LoginCheck&quot;</td>
+	<td>testname</td>
+</tr>
+<tr>
+	<td>runScript</td>
+	<td>javascript{var xhr = new XMLHttpRequest(); xhr.open('POST','http://localhost:8091/loggingServer',false); xhr.send(&quot;1&amp;&quot;+&quot;''&quot;)}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>http://localhost:8282/hupa/Hupa.html?a=b&amp;testitem=CheckAndDisplayMail1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=div.GP5U1CUCCS</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>gmail1[0]</td>
+	<td>user</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=email</td>
+	<td>${user}</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>gmail1[1]</td>
+	<td>pw</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=password</td>
+	<td>${pw}</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>css=button.gwt-SubmitButton.GP5U1CUCAS</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=div.emptyMsg</td>
+	<td></td>
+</tr>
+<!--Test-->
+<tr>
+	<td>waitForText</td>
+	<td>css=div.GP5U1CUCLM.GP5U1CUCPM</td>
+	<td>Loading...</td>
+</tr>
+<tr>
+	<td>waitForNotText</td>
+	<td>css=div.GP5U1CUCLM.GP5U1CUCPM</td>
+	<td>Loading...</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[2]/div/div/table/tbody/tr/td[2]/div</td>
+	<td>${user}</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//div[2]/div/div/table/tbody/tr/td[2]/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[2]/div/div/table/tbody/tr/td[2]/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[2]/div/div/table/tbody/tr/td[2]/div</td>
+	<td>${user}</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>testMail1[0]</td>
+	<td>subject1</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div/table/tbody/tr/td[3]/div</td>
+	<td>${subject1}</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[2]/div/div/table/tbody/tr/td[2]/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>testMail1[1]</td>
+	<td>text1</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>css=div.GP5U1CUCLM.GP5U1CUCPM</td>
+	<td>Loading...</td>
+</tr>
+<tr>
+	<td>waitForNotText</td>
+	<td>css=div.GP5U1CUCLM.GP5U1CUCPM</td>
+	<td>Loading...</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>css=div.gwt-HTML.GP5U1CUCPW</td>
+	<td>${text1}</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=div.gwt-HTML.GP5U1CUCPW</td>
+	<td>${text1}</td>
+</tr>
+<!--AfterTest-->
+<tr>
+	<td>clickAt</td>
+	<td>link=Logout</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=button.gwt-SubmitButton.GP5U1CUCAS</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=button.gwt-SubmitButton.GP5U1CUCAS</td>
+	<td></td>
+</tr>
+<tr>
+	<td>runScript</td>
+	<td>javascript{var xhr = new XMLHttpRequest(); xhr.open('POST','http://localhost:8091/loggingServer',false); xhr.send(&quot;0&amp;&quot;+storedVars['testname'])}</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

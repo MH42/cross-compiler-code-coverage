@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/algorithms
+END
+Md5.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/repos/asf/!svn/ver/1573291/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/algorithms/Md5.java
+END
+RC4.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/repos/asf/!svn/ver/1573291/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/algorithms/RC4.java
+END
+B64.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/algorithms/B64.java
+END

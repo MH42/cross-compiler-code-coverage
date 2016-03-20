@@ -1,0 +1,13 @@
+K 10
+svn:ignore
+V 58
+target
+war
+.settings
+.classpath
+.project
+coverage.ec
+bin
+
+
+END

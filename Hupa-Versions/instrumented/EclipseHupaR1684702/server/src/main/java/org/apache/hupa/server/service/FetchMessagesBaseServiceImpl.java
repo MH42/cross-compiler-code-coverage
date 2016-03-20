@@ -1,0 +1,364 @@
+/****************************************************************
+ * Licensed to the Apache Software Foundation (ASF) under one   *
+ * or more contributor license agreements.  See the NOTICE file *
+ * distributed with this work for additional information        *
+ * regarding copyright ownership.  The ASF licenses this file   *
+ * to you under the Apache License, Version 2.0 (the            *
+ * "License"); you may not use this file except in compliance   *
+ * with the License.  You may obtain a copy of the License at   *
+ *                                                              *
+ *   http://www.apache.org/licenses/LICENSE-2.0                 *
+ *                                                              *
+ * Unless required by applicable law or agreed to in writing,   *
+ * software distributed under the License is distributed on an  *
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY       *
+ * KIND, either express or implied.  See the License for the    *
+ * specific language governing permissions and limitations      *
+ * under the License.                                           *
+ ****************************************************************/
+
+package org.apache.hupa.server.service;
+
+
+import tc3.desktop.InstrumentationLoggerProvider;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.mail.Address;
+import javax.mail.FetchProfile;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.Part;
+import javax.mail.UIDFolder;
+import javax.mail.internet.MimeMessage.RecipientType;
+
+import org.apache.hupa.server.handler.JavamailUtil;
+import org.apache.hupa.server.preferences.UserPreferencesStorage;
+import org.apache.hupa.server.utils.MessageUtils;
+import org.apache.hupa.shared.data.FetchMessagesResultImpl;
+import org.apache.hupa.shared.data.ImapFolderImpl;
+import org.apache.hupa.shared.data.MessageImpl.IMAPFlag;
+import org.apache.hupa.shared.data.TagImpl;
+import org.apache.hupa.shared.domain.FetchMessagesAction;
+import org.apache.hupa.shared.domain.FetchMessagesResult;
+import org.apache.hupa.shared.domain.ImapFolder;
+import org.apache.hupa.shared.domain.Tag;
+import org.apache.hupa.shared.domain.User;
+import org.apache.hupa.shared.exception.HupaException;
+
+import com.google.inject.Inject;
+import com.sun.mail.imap.IMAPStore;
+
+public abstract class FetchMessagesBaseServiceImpl extends AbstractService{
+
+    @Inject protected UserPreferencesStorage userPreferences;
+
+    public FetchMessagesResult fetch(FetchMessagesAction action) throws HupaException{
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x2_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a24_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x20x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x3");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x00x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x00x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x00x0");
+		User user = getUser();
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x10x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x10x1");
+		ImapFolder folder = action.getFolder();
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x2_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x20x0");
+		if (folder == null) {
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x20x1");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x20x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x20x10x00x00x00x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x20x10x00x00x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x20x10x00x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x20x10x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x20x10x00x00x00x1");
+			folder = new ImapFolderImpl(user.getSettings().getInboxFolderName());
+        }
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x3_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x30x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x30x1");
+		com.sun.mail.imap.IMAPFolder f = null;
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x40x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x40x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x40x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x4");
+		int start = action.getStart();
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x5_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x50x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x50x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x50x0");
+		int offset = action.getOffset();
+        try {
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x6");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x00x00x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x00x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x00x00x10x0");
+			IMAPStore store = cache.get(user);
+
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x00x10x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x00x10x00x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x00x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x00x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x00x10x00x00x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x00x10x00x00x1");
+			f =  (com.sun.mail.imap.IMAPFolder)store.getFolder(folder.getFullName());
+
+             InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x00x20x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x00x2_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x00x20x0");
+			// check if the folder is open, if not open it read only
+            if (f.isOpen() == false) {
+                InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x00x20x1");
+				InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x00x20x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x00x20x10x00x0");
+				f.open(com.sun.mail.imap.IMAPFolder.READ_ONLY);
+            }
+
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x00x3_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x00x30x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x00x30x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x00x30x0");
+			// if the folder is empty we have no need to process
+            int exists = f.getMessageCount();
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x00x4_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x00x40x0");
+			if (exists == 0) {
+                 InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x00x40x1");
+				InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x00x40x10x00x00x10x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x00x40x10x00x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x00x40x10x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x00x40x10x00x00x10x00x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x00x40x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x00x40x10x00x00x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x00x40x10x00x00x10x0");
+				return new FetchMessagesResultImpl(new ArrayList<org.apache.hupa.shared.domain.Message>(), start, offset, 0, 0);
+            }
+
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x00x50x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x00x5_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x00x50x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x00x50x0");
+			MessageConvertArray convArray = getMessagesToConvert(f,action);
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x00x60x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x00x60x00x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x00x60x00x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x00x6_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x00x60x00x3_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x00x60x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x00x60x00x2");
+			return new FetchMessagesResultImpl(convert(offset, f, convArray.getMesssages()),start, offset,convArray.getRealCount(),f.getUnreadMessageCount());
+        } catch (MessagingException e) {
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x10x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x10x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x1");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x10x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x10x10x00x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x10x10x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x10x10x00x00x00x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x10x10x00x00x00x0");
+			logger.info("Error fetching messages in folder: " + folder.getFullName() + " " + e.getMessage());
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x10x10x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x10x10x10x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x10x10x10x00x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x10x10x10x00x10x00x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x10x10x10x00x10x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x10x10x10x00x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x10x10x10x0");
+			// Folder can not contain messages
+            return new FetchMessagesResultImpl(new ArrayList<org.apache.hupa.shared.domain.Message>(), start, offset, 0, 0);
+        } finally {
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x2");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x20x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x20x00x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x20x00x00x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x20x00x0");
+			if (f != null && f.isOpen()) {
+                InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x20x00x1");
+				try {
+                    InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x20x00x10x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x20x00x10x0");
+					InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x20x00x10x00x00x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x20x00x10x00x00x0");
+					f.close(false);
+                } catch (MessagingException e) {
+					InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x20x00x10x00x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x20x00x10x00x10x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x20x00x10x00x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134013c51a240x30x60x20x00x10x00x10x00x0");
+                    // we don't care to much about an exception on close here...
+                }
+            }
+        }
+    }
+
+
+    protected abstract MessageConvertArray getMessagesToConvert(com.sun.mail.imap.IMAPFolder f, FetchMessagesAction action) throws MessagingException;
+
+    protected List<org.apache.hupa.shared.domain.Message> convert(int offset, com.sun.mail.imap.IMAPFolder folder, Message[] messages) throws MessagingException {
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x4_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x10x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x2_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x20x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x40x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x5_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x40x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x30x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x3_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf4");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x00x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x00x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x00x10x00x00x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x00x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x00x00x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x00x10x00x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x00x10x00x0");
+		List<org.apache.hupa.shared.domain.Message> mList = new ArrayList<org.apache.hupa.shared.domain.Message>();
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x10x10x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x10x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x10x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x1");
+		// Setup fetchprofile to limit the stuff which is fetched
+        FetchProfile fp = new FetchProfile();
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x20x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x2");
+		fp.add(FetchProfile.Item.ENVELOPE);
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x30x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x3");
+		fp.add(FetchProfile.Item.FLAGS);
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x40x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x4");
+		fp.add(FetchProfile.Item.CONTENT_INFO);
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x5_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x50x0");
+		fp.add(UIDFolder.FetchProfileItem.UID);
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x60x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x6");
+		folder.fetch(messages, fp);
+
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x2_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x10x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x7_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x00x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x10x0");
+		// loop over the fetched messages
+        for (int i = 0; i < messages.length && i < offset; i++) {
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x3");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x00x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x00x10x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x00x1");
+			org.apache.hupa.shared.domain.Message msg = new org.apache.hupa.shared.data.MessageImpl();
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x10x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x10x0");
+			Message m = messages[i];
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x20x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x2_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x20x1");
+			String from = null;
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x30x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x30x00x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x30x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x30x00x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x3");
+			if (m.getFrom() != null && m.getFrom().length >0 ) {
+                InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x30x1");
+				InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x30x10x00x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x30x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x30x10x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x30x10x00x00x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0");
+				from = MessageUtils.decodeText(m.getFrom()[0].toString());
+            }
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x40x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x4");
+			msg.setFrom(from);
+
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x50x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x50x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x5");
+			String replyto = null;
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x60x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x60x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x6_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x60x00x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x60x00x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0");
+			if (m.getReplyTo() != null && m.getReplyTo().length >0 ) {
+                InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x60x1");
+				InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x60x10x00x00x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x60x10x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x60x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x60x10x00x00x0");
+				replyto = MessageUtils.decodeText(m.getReplyTo()[0].toString());
+            }
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x70x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x7");
+			msg.setReplyto(replyto);
+
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x80x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x80x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x80x10x00x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x80x10x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x80x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x80x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x80x00x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x80x10x00x00x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x8");
+			ArrayList<String> to = new ArrayList<String>();
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x90x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x90x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x90x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x90x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x9");
+			// Add to addresses
+            Address[] toArray = m.getRecipients(RecipientType.TO);
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30xa0x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30xa");
+			if (toArray != null) {
+                InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30xa0x1");
+				InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30xa0x10x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30xa0x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30xa0x10x00x00x0");
+				for (Address addr : toArray) {
+                    InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30xa0x10x00x1");
+					InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30xa0x10x00x10x00x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30xa0x10x00x10x00x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30xa0x10x00x10x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30xa0x10x00x10x00x10x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30xa0x10x00x10x0");
+					String mailTo = MessageUtils.decodeText(addr.toString());
+                    InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30xa0x10x00x10x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30xa0x10x00x10x10x0");
+					to.add(mailTo);
+                }
+            }
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30xb0x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30xb");
+			msg.setTo(to);
+
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30xc0x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30xc_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30xc0x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30xc0x1");
+			// Check if a subject exist and if so decode it
+            String subject = m.getSubject();
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30xd0x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30xd");
+			if (subject != null) {
+                InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30xd0x1");
+				InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30xd0x10x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30xd0x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30xd0x10x00x00x0");
+				subject = MessageUtils.decodeText(subject);
+            }
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30xe0x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30xe");
+			msg.setSubject(subject);
+
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30xf0x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30xf0x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30xf0x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30xf_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30xf0x1");
+			// Add cc addresses
+            Address[] ccArray = m.getRecipients(RecipientType.CC);
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x100x10x00x00x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x100x10x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x100x10x00x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x100x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x10_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x100x00x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x100x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x100x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x100x00x0");
+			ArrayList<String> cc = new ArrayList<String>();
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x110x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x11");
+			if (ccArray != null) {
+                InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x110x1");
+				InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x110x10x00x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x110x10x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x110x10x0");
+				for (Address addr : ccArray) {
+                    InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x110x10x00x1");
+					InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x110x10x00x10x00x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x110x10x00x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x110x10x00x10x00x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x110x10x00x10x00x10x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x110x10x00x10x00x0");
+					String mailCc = MessageUtils.decodeText(addr.toString());
+                    InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x110x10x00x10x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x110x10x00x10x10x0");
+					cc.add(mailCc);
+                }
+            }
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x120x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x12");
+			msg.setCc(cc);
+
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x13_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x130x0");
+			userPreferences.addContact(from);
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x14_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x140x0");
+			userPreferences.addContact(to);
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x150x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x15");
+			userPreferences.addContact(replyto);
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x16_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x160x0");
+			userPreferences.addContact(cc);
+
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x17_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x170x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x170x0");
+			// Using sentDate since received date is not useful in the view when using fetchmail
+            msg.setReceivedDate(m.getSentDate());
+
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x180x00x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x180x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x18_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x180x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x180x10x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x180x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x180x1");
+			// Add flags
+            ArrayList<IMAPFlag> iFlags = JavamailUtil.convert(m.getFlags());
+
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x190x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x190x10x00x00x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x190x00x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x190x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x190x10x00x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x190x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x19_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x190x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x190x10x00x0");
+			ArrayList<Tag> tags = new ArrayList<Tag>();
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x1a0x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x1a_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x1a0x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x1a0x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x1a0x00x0");
+			for (String flag : m.getFlags().getUserFlags()) {
+                InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x1a0x2");
+				InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x1a0x20x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x1a0x20x00x0");
+				if (flag.startsWith(TagImpl.PREFIX)) {
+                    InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x1a0x20x00x1");
+					InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x1a0x20x00x10x00x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x1a0x20x00x10x00x00x00x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x1a0x20x00x10x00x00x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x1a0x20x00x10x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x1a0x20x00x10x00x00x00x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x1a0x20x00x10x0");
+					tags.add(new TagImpl(flag.substring(TagImpl.PREFIX.length())));
+                }
+            }
+
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x1b0x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x1b_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x1b0x00x0");
+			msg.setUid(folder.getUID(m));
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x1c0x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x1c");
+			msg.setFlags(iFlags);
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x1d0x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x1d");
+			msg.setTags(tags);
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x1e_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x1e0x0");
+			try {
+                InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x1e0x00x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x1e0x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x1e0x00x00x00x0");
+				msg.setHasAttachments(hasAttachment(m));
+            } catch (MessagingException e) {
+                InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x1e0x10x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x1e0x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x1e0x10x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x1e0x1");
+				InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x1e0x10x10x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x1e0x10x10x00x00x00x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x1e0x10x10x00x00x00x2_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x1e0x10x10x00x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x1e0x10x10x00x00x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x1e0x10x10x0");
+				logger.debug("Unable to identify attachments in message UID:" + msg.getUid() + " subject:" + msg.getSubject() + " cause:" + e.getMessage());
+                InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x1e0x10x10x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x1e0x10x10x1");
+				logger.info("");
+            }
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x1f0x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x70x30x1f");
+			mList.add(0, msg);
+
+        }
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134098dffaf40x50x8");
+		return mList;
+    }
+
+    private boolean hasAttachment(Message message) throws MessagingException {
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x20x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x2_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x3");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x00x0");
+		if (message.getContentType().startsWith("multipart/")) {
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x1");
+			try {
+                InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x10x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x10x0");
+				InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x10x00x00x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x10x00x00x00x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x10x00x00x0");
+				Object content;
+
+                InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x10x00x00x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x10x00x00x10x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x10x00x00x1");
+				content = message.getContent();
+
+                InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x10x00x00x20x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x10x00x00x20x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x10x00x00x2");
+				if (content instanceof Multipart) {
+                    InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x10x00x00x20x1");
+					InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x10x00x00x20x10x00x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x10x00x00x20x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x10x00x00x20x10x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x10x00x00x20x10x00x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x10x00x00x20x10x00x10x00x0");
+					Multipart mp = (Multipart) content;
+                    InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x10x00x00x20x10x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x10x00x00x20x10x10x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x10x00x00x20x10x10x0");
+					if (mp.getCount() > 1) {
+                        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x10x00x00x20x10x10x1");
+						InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x10x00x00x20x10x10x10x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x10x00x00x20x10x10x10x00x00x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x10x00x00x20x10x10x10x00x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x10x00x00x20x10x10x10x00x2_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x10x00x00x20x10x10x10x00x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x10x00x00x20x10x10x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x10x00x00x20x10x10x10x00x00x0");
+						for (int i = 0; i < mp.getCount(); i++) {
+                            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x10x00x00x20x10x10x10x00x3");
+							InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x10x00x00x20x10x10x10x00x30x00x10x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x10x00x00x20x10x10x10x00x30x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x10x00x00x20x10x10x10x00x30x00x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x10x00x00x20x10x10x10x00x30x00x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x10x00x00x20x10x10x10x00x30x00x0");
+							String disp = mp.getBodyPart(i).getDisposition();
+                            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x10x00x00x20x10x10x10x00x30x10x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x10x00x00x20x10x10x10x00x30x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x10x00x00x20x10x10x10x00x30x1");
+							if (disp != null
+                                    && disp.equalsIgnoreCase(Part.ATTACHMENT)) {
+                                InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x10x00x00x20x10x10x10x00x30x10x1");
+										InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x10x00x00x20x10x10x10x00x30x10x10x0");
+								return true;
+                            }
+                        }
+                    }
+
+                }
+            } catch (IOException e) {
+                InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x10x00x10x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x10x00x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x10x00x10x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x10x00x1");
+				InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x10x00x10x10x00x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x10x00x10x10x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x10x00x10x10x00x00x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x00x10x00x10x10x0");
+				logger.error("Error while get content of message " + message.getMessageNumber());
+            }
+
+        }
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340259b6a3b0x30x1");
+		return false;
+    }
+    protected final class MessageConvertArray {
+        private Message[] messages;
+        private int realCount;
+
+        public MessageConvertArray(int realCount, Message[] messages) {
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134029a0a19b9d5bdbbc0x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134029a0a19b9d5bdbbc_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134029a0a19b9d5bdbbc0x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134029a0a19b9d5bdbbc0x2");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134029a0a19b17f3467d0x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134029a0a19b17f3467d_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134029a0a19b17f3467d0x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134029a0a19b17f3467d0x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134029a0a19b17f3467d0x2");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134029a0a19b0x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134029a0a19b0x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134029a0a19b");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134029a0a19b83b3fc040x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134029a0a19b83b3fc040x20x00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134029a0a19b83b3fc040x20x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134029a0a19b83b3fc04_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134029a0a19b83b3fc040x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134029a0a19b83b3fc040x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134029a0a19b83b3fc040x3_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134029a0a19b83b3fc040x2");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d13400x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d13400x2_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d13400x0");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340cf05f6da0x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340cf05f6da0x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340cf05f6da0x2_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d1340cf05f6da");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134029a0a19b83b3fc040x30x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134029a0a19b83b3fc040x30x00x0");
+			this.messages = messages;
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134029a0a19b83b3fc040x30x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134029a0a19b83b3fc040x30x1");
+			this.realCount = realCount;
+        }
+
+        public int getRealCount() {
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134029a0a19ba948ca110x1_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134029a0a19ba948ca110x2_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134029a0a19ba948ca11_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134029a0a19ba948ca110x0");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134029a0a19ba948ca110x20x0");
+			return realCount;
+        }
+
+        public Message[] getMesssages() {
+            InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134029a0a19b5f64c5e00x10x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134029a0a19b5f64c5e0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134029a0a19b5f64c5e00x0_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134029a0a19b5f64c5e00x2_____org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134029a0a19b5f64c5e00x1");
+			InstrumentationLoggerProvider.get().instrument("org_apache_hupa_server_service_FetchMessagesBaseServiceImpl_java0x0c84d134029a0a19b5f64c5e00x20x0");
+			return messages;
+        }
+    }
+}

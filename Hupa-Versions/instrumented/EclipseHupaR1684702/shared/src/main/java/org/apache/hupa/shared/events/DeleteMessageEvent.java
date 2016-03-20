@@ -1,0 +1,108 @@
+/****************************************************************
+ * Licensed to the Apache Software Foundation (ASF) under one   *
+ * or more contributor license agreements.  See the NOTICE file *
+ * distributed with this work for additional information        *
+ * regarding copyright ownership.  The ASF licenses this file   *
+ * to you under the Apache License, Version 2.0 (the            *
+ * "License"); you may not use this file except in compliance   *
+ * with the License.  You may obtain a copy of the License at   *
+ *                                                              *
+ *   http://www.apache.org/licenses/LICENSE-2.0                 *
+ *                                                              *
+ * Unless required by applicable law or agreed to in writing,   *
+ * software distributed under the License is distributed on an  *
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY       *
+ * KIND, either express or implied.  See the License for the    *
+ * specific language governing permissions and limitations      *
+ * under the License.                                           *
+ ****************************************************************/
+
+package org.apache.hupa.shared.events;
+
+
+import tc3.shared.InstrumentationLoggerProvider;
+import java.util.ArrayList;
+
+import org.apache.hupa.shared.data.ImapFolderImpl;
+import org.apache.hupa.shared.domain.Message;
+import org.apache.hupa.shared.domain.User;
+
+import com.google.gwt.event.shared.GwtEvent;
+
+public class DeleteMessageEvent extends GwtEvent<DeleteMessageEventHandler>{
+
+    static {
+	  InstrumentationLoggerProvider.get().instrument("org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb29bca4bd90x40x0_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb29bca4bd90x40x00x0_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb29bca4bd90x30x1_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb29bca4bd90x40x00x00x0_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb29bca4bd90x30x0_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb29bca4bd90x0_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb29bca4bd90x4_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb29bca4bd90x3_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb29bca4bd90x2_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb29bca4bd90x40x00x00x1_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb29bca4bd9_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb29bca4bd90x1");
+	}
+	
+
+	public final static Type<DeleteMessageEventHandler> TYPE = new Type<DeleteMessageEventHandler>();
+    private User user;
+    private ImapFolderImpl folder;
+    private ArrayList<Message> messageList;
+    @Override
+    protected void dispatch(DeleteMessageEventHandler handler) {
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2c509eb4e0x0_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2c509eb4e0x1_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2c509eb4e0x2_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2c509eb4e0x3_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2c509eb4e0x20x0");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2c509eb4e");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2c509eb4e0x30x00x00x0_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2c509eb4e0x30x00x0_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2c509eb4e0x30x0");
+		handler.onDeleteMessageEvent(this);
+    }
+
+    @Override
+    public com.google.gwt.event.shared.GwtEvent.Type<DeleteMessageEventHandler> getAssociatedType() {
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2adc165ab");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2adc165ab0x10x1_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2adc165ab0x1_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2adc165ab0x2_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2adc165ab0x0_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2adc165ab0x10x0");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2adc165ab0x20x0");
+		return TYPE;
+    }
+
+    public DeleteMessageEvent(User user, ImapFolderImpl folder, ArrayList<Message> messageList) {
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2716e10af0x30x0_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2716e10af0x30x00x1_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2716e10af0x20x0_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2716e10af_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2716e10af0x30x00x0_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2716e10af0x2_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2716e10af0x1_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2716e10af0x3_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2716e10af0x10x0_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2716e10af0x0_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2716e10af0x4");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb212dea96f_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb212dea96f0x0_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb212dea96f0x2_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb212dea96f0x1");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2b219040a0x10x1_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2b219040a_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2b219040a0x0_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2b219040a0x10x0_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2b219040a0x2_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2b219040a0x1");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2afffdd080x2_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2afffdd08_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2afffdd080x1_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2afffdd080x0");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb20x10x0_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb20x10x1_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb20x1_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb20x0");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2716e10af0x40x0_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x0_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2716e10af0x40x00x0");
+		this.user = user;
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2716e10af0x40x10x0_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2716e10af0x40x1_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x0");
+		this.folder = folder;
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2716e10af0x40x20x0_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2716e10af0x40x2_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x0");
+		this.messageList = messageList;
+    }
+    public DeleteMessageEvent(User user, ImapFolderImpl folder, Message message) {
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2562dee0b_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2562dee0b0x0_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2562dee0b0x20x0_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2562dee0b0x4_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2562dee0b0x3_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2562dee0b0x30x0_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2562dee0b0x2_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2562dee0b0x10x0_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2562dee0b0x1");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb212dea96f_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb212dea96f0x0_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb212dea96f0x2_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb212dea96f0x1");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2b219040a0x10x1_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2b219040a_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2b219040a0x0_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2b219040a0x10x0_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2b219040a0x2_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2b219040a0x1");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2afffdd080x2_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2afffdd08_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2afffdd080x1_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2afffdd080x0");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb20x10x0_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb20x10x1_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb20x1_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb20x0");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2562dee0b0x40x00x00x0_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2562dee0b0x40x0_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2562dee0b0x40x00x1_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2562dee0b0x40x00x10x00x00x1_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2562dee0b0x40x00x10x00x0_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2562dee0b0x40x00x00x1_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2562dee0b0x40x00x0_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2562dee0b0x40x00x10x0_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2562dee0b0x40x00x10x00x00x0");
+		ArrayList<Message> mList = new ArrayList<Message>();
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2562dee0b0x40x1_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2562dee0b0x40x10x0");
+		mList.add(message);
+
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_shared_events_DeleteMessageEvent_java0x0_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2562dee0b0x40x20x0_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2562dee0b0x40x2");
+		this.user = user;
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2562dee0b0x40x30x0_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x0_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2562dee0b0x40x3");
+		this.folder = folder;
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2562dee0b0x40x4_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2562dee0b0x40x40x0_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x0");
+		this.messageList = mList;
+    }
+    public User getUser() {
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2abbd3e690x0_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2abbd3e690x1_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2abbd3e69_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2abbd3e690x2");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2abbd3e690x20x0");
+		return user;
+    }
+
+    public ImapFolderImpl getFolder() {
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2a7336cc5_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2a7336cc50x0_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2a7336cc50x1_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2a7336cc50x2");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb2a7336cc50x20x0");
+		return folder;
+    }
+
+    public ArrayList<Message> getMessages() {
+        InstrumentationLoggerProvider.get().instrument("org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb28c4146150x10x1_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb28c4146150x1_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb28c4146150x10x0_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb28c4146150x0_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb28c4146150x2_____org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb28c414615");
+		InstrumentationLoggerProvider.get().instrument("org_apache_hupa_shared_events_DeleteMessageEvent_java0x055eeffb28c4146150x20x0");
+		return messageList;
+    }
+
+}

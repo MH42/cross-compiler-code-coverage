@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/servlet
+END
+UploadAttachmentServlet.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/servlet/UploadAttachmentServlet.java
+END
+DownloadAttachmentServlet.java
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/servlet/DownloadAttachmentServlet.java
+END
+MessageSourceServlet.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/repos/asf/!svn/ver/1577826/james/hupa/trunk/server/src/main/java/org/apache/hupa/server/servlet/MessageSourceServlet.java
+END

@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/repos/asf/!svn/ver/1683360/james/hupa/trunk/widgets/src/main/java/org/apache/hupa/widgets/editor
+END
+ToolbarConstants.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/widgets/src/main/java/org/apache/hupa/widgets/editor/ToolbarConstants.java
+END
+Toolbar.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/widgets/src/main/java/org/apache/hupa/widgets/editor/Toolbar.java
+END
+FontPicker.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/repos/asf/!svn/ver/1683360/james/hupa/trunk/widgets/src/main/java/org/apache/hupa/widgets/editor/FontPicker.java
+END
+Editor.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/repos/asf/!svn/ver/1683360/james/hupa/trunk/widgets/src/main/java/org/apache/hupa/widgets/editor/Editor.java
+END
+ColorPicker.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/repos/asf/!svn/ver/1683360/james/hupa/trunk/widgets/src/main/java/org/apache/hupa/widgets/editor/ColorPicker.java
+END

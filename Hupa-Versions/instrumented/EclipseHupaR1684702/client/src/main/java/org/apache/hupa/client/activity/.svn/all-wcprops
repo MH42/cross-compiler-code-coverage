@@ -1,0 +1,131 @@
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/repos/asf/!svn/ver/1684702/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/activity
+END
+SettingNavActivity.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/activity/SettingNavActivity.java
+END
+StatusActivity.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/activity/StatusActivity.java
+END
+NotificationActivity.java
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/activity/NotificationActivity.java
+END
+TopBarActivity.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/repos/asf/!svn/ver/1613760/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/activity/TopBarActivity.java
+END
+ComposeToolBarActivity.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/activity/ComposeToolBarActivity.java
+END
+LabelPropertiesActivity.java
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/activity/LabelPropertiesActivity.java
+END
+NavigationActivity.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/activity/NavigationActivity.java
+END
+MessageListFooterActivity.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/activity/MessageListFooterActivity.java
+END
+LogoActivity.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/activity/LogoActivity.java
+END
+ToolBarActivity.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/activity/ToolBarActivity.java
+END
+ComposeActivity.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/repos/asf/!svn/ver/1683575/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/activity/ComposeActivity.java
+END
+FolderListActivity.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/activity/FolderListActivity.java
+END
+LoginActivity.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/activity/LoginActivity.java
+END
+ContactPropertiesActivity.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/activity/ContactPropertiesActivity.java
+END
+ContactsListActivity.java
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/repos/asf/!svn/ver/1613760/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/activity/ContactsListActivity.java
+END
+LabelListActivity.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/repos/asf/!svn/ver/1613760/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/activity/LabelListActivity.java
+END
+AppBaseActivity.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/activity/AppBaseActivity.java
+END
+SearchBoxActivity.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/activity/SearchBoxActivity.java
+END
+MessageContentActivity.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/activity/MessageContentActivity.java
+END
+MessageListActivity.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/repos/asf/!svn/ver/1684702/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/activity/MessageListActivity.java
+END
+AddressListActivity.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/client/src/main/java/org/apache/hupa/client/activity/AddressListActivity.java
+END

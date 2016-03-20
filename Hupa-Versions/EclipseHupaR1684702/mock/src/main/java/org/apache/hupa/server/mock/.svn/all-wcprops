@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/repos/asf/!svn/ver/1683360/james/hupa/trunk/mock/src/main/java/org/apache/hupa/server/mock
+END
+MockConstants.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/repos/asf/!svn/ver/1683360/james/hupa/trunk/mock/src/main/java/org/apache/hupa/server/mock/MockConstants.java
+END
+MockLogProvider.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/mock/src/main/java/org/apache/hupa/server/mock/MockLogProvider.java
+END
+MockHttpSessionProvider.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/repos/asf/!svn/ver/1525515/james/hupa/trunk/mock/src/main/java/org/apache/hupa/server/mock/MockHttpSessionProvider.java
+END
+MockLog.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/mock/src/main/java/org/apache/hupa/server/mock/MockLog.java
+END
+MockIMAPFolder.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/mock/src/main/java/org/apache/hupa/server/mock/MockIMAPFolder.java
+END
+MockHttpSession.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/repos/asf/!svn/ver/1683360/james/hupa/trunk/mock/src/main/java/org/apache/hupa/server/mock/MockHttpSession.java
+END
+MockIMAPStore.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/mock/src/main/java/org/apache/hupa/server/mock/MockIMAPStore.java
+END

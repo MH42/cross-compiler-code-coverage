@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost:8282/hupa/Hupa.html" />
+<title>TestTemplate</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">TestTemplate</td></tr>
+</thead><tbody>
+<!--BeforeTest-->
+<tr>
+	<td>open</td>
+	<td>http://localhost:8282/hupa/Hupa.html</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=div.GP5U1CUCCS</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=email</td>
+	<td>hupagwt@gmail.com</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=password</td>
+	<td>Hupagwt-1</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>css=button.gwt-SubmitButton.GP5U1CUCAS</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=div.emptyMsg</td>
+	<td></td>
+</tr>
+<!--Test-->
+<tr>
+	<td>click</td>
+	<td>link=Settings</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=h2.boxtitle</td>
+	<td>Settings</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=h2.GP5U1CUCEP</td>
+	<td>IMAP-Folders</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Mail</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Refresh</td>
+	<td>Refresh</td>
+</tr>
+<!--AfterTest-->
+<tr>
+	<td>clickAt</td>
+	<td>link=Logout</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=button.gwt-SubmitButton.GP5U1CUCAS</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=button.gwt-SubmitButton.GP5U1CUCAS</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

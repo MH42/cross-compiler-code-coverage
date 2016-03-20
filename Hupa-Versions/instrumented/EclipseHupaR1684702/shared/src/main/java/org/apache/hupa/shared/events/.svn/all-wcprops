@@ -1,0 +1,377 @@
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events
+END
+SendClickEventHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/SendClickEventHandler.java
+END
+BackEventHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/BackEventHandler.java
+END
+ReplyMessageEventHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/repos/asf/!svn/ver/828980/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/ReplyMessageEventHandler.java
+END
+NewMessageEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/NewMessageEvent.java
+END
+SessionExpireEventHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/repos/asf/!svn/ver/828980/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/SessionExpireEventHandler.java
+END
+SendClickEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/SendClickEvent.java
+END
+IncreaseUnseenEventHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/repos/asf/!svn/ver/828980/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/IncreaseUnseenEventHandler.java
+END
+MessageListRangeChangedEventHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/MessageListRangeChangedEventHandler.java
+END
+MessageListRangeChangedEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/MessageListRangeChangedEvent.java
+END
+LogoutEventHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/LogoutEventHandler.java
+END
+IncreaseUnseenEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/IncreaseUnseenEvent.java
+END
+ServerStatusEventHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/ServerStatusEventHandler.java
+END
+DeleteClickEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/DeleteClickEvent.java
+END
+LoginEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/LoginEvent.java
+END
+LogoutEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/LogoutEvent.java
+END
+MoveMessageEventHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/MoveMessageEventHandler.java
+END
+AttachClickEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/AttachClickEvent.java
+END
+MoveMessageEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/MoveMessageEvent.java
+END
+SentMessageEventHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/SentMessageEventHandler.java
+END
+MessagesReceivedEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/MessagesReceivedEvent.java
+END
+FolderSelectionEventHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/repos/asf/!svn/ver/828980/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/FolderSelectionEventHandler.java
+END
+FolderSelectionEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/FolderSelectionEvent.java
+END
+ExpandMessageEventHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/repos/asf/!svn/ver/828980/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/ExpandMessageEventHandler.java
+END
+MailToEventHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/MailToEventHandler.java
+END
+MailToEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/MailToEvent.java
+END
+RefreshMessagesEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/RefreshMessagesEvent.java
+END
+DecreaseUnseenEventHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/repos/asf/!svn/ver/828980/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/DecreaseUnseenEventHandler.java
+END
+DecreaseUnseenEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/DecreaseUnseenEvent.java
+END
+RefreshLabelListEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/RefreshLabelListEvent.java
+END
+ShowRawEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/ShowRawEvent.java
+END
+FlashEventHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/FlashEventHandler.java
+END
+NewMessageEventHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/NewMessageEventHandler.java
+END
+FlashEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/FlashEvent.java
+END
+DeleteFolderEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/DeleteFolderEvent.java
+END
+BackEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/BackEvent.java
+END
+ReplyMessageEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/ReplyMessageEvent.java
+END
+SessionExpireEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/SessionExpireEvent.java
+END
+DeleteMessageEventHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/DeleteMessageEventHandler.java
+END
+LoadMessagesEventHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/LoadMessagesEventHandler.java
+END
+DeleteClickEventHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/DeleteClickEventHandler.java
+END
+LoginEventHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/LoginEventHandler.java
+END
+LoadMessagesEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/LoadMessagesEvent.java
+END
+ForwardMessageEventHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/ForwardMessageEventHandler.java
+END
+DeleteMessageEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/DeleteMessageEvent.java
+END
+AttachClickEventHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/AttachClickEventHandler.java
+END
+ForwardMessageEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/ForwardMessageEvent.java
+END
+ServerStatusEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/ServerStatusEvent.java
+END
+RefreshFoldersEventHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/RefreshFoldersEventHandler.java
+END
+MessagesReceivedEventHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/MessagesReceivedEventHandler.java
+END
+RefreshFoldersEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/RefreshFoldersEvent.java
+END
+MessageViewEventHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/MessageViewEventHandler.java
+END
+SentMessageEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/SentMessageEvent.java
+END
+MessageViewEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/MessageViewEvent.java
+END
+ContactsUpdatedEventHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/ContactsUpdatedEventHandler.java
+END
+RefreshMessagesEventHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/RefreshMessagesEventHandler.java
+END
+ExpandMessageEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/ExpandMessageEvent.java
+END
+ContactsUpdatedEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/ContactsUpdatedEvent.java
+END
+ShowRawEventHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/ShowRawEventHandler.java
+END
+RefreshLabelListEventHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/RefreshLabelListEventHandler.java
+END
+AddressClickEventHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/AddressClickEventHandler.java
+END
+AddressClickEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/AddressClickEvent.java
+END
+DeleteFolderEventHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/repos/asf/!svn/ver/1579559/james/hupa/trunk/shared/src/main/java/org/apache/hupa/shared/events/DeleteFolderEventHandler.java
+END
