@@ -24,7 +24,7 @@ In order to run the web tests, Selenium requires two JS-scripts. The first one (
 
 After you have downloaded both the tool and the scripts successfully, start Selenium. You will find it in the 'Tools' menu of your Firefox browser. Navigate to 'Options' -> 'Options…'. In the 'General' tab, add in 'Selenium core extensions' the path that points to the 'Sideflow'-script. Insert the path to accountData.js in 'Selenium IDE extensions'.
 
-## Logged CIDs
+## Using our CIDs to calculate code coverage
 If you don't want to run an instrumented version of Hupa in order to get the corresponding CIDs, you can use our CIDs which we have used during the evaluation. The CIDs for the revisions 1684702 are available as MySQL-dump-file (hupa_coverage.sql) in this directory. 
 
 ## Code Coverage Results
