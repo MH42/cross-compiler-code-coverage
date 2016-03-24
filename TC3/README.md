@@ -13,7 +13,7 @@
 
 **Details:**
 
-In order to run <span style="font-variant: small-caps">TC3</span>, you need to install a version of [Eclipse](https://eclipse.org/). Besides, you need MySQL. If you do not have already installed MySQL, we recommend [XAMPP](https://www.apachefriends.org/de/index.html) (for all OS) or [WAMPP](http://www.wampserver.com/en/) (for Windows). Create an empty database ``tc3`` and import the sql-dump ``tc3_template.sql`` (empty password).
+In order to run <span style="font-variant: small-caps">TC3</span>, you need to install a version of [Eclipse](https://eclipse.org/). Besides, you need MySQL. If you do not have already installed MySQL, we recommend [XAMPP](https://www.apachefriends.org/de/index.html) (for all OS) or [WAMPP](http://www.wampserver.com/en/) (for Windows). Create an empty database ``tc3`` (collation: latin1_general_ci) and import the sql-dump ``tc3_template.sql`` (empty password).
 If you want to check out and build Hupa from source, you will need [Maven](https://maven.apache.org/). Please follow the instructions on the [Hupa website](http://james.apache.org/hupa/building.html). Alternatively, you can use precompiled versions of Hupa if you do not want to build Hupa from scratch. The precompiled versions are available for download as Eclipse-project in the ['Hupa-Versions'](../Hupa-Versions/) directory. 
 
 
