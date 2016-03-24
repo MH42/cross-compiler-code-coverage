@@ -13,7 +13,7 @@
 
 **Details:**
 
-In order to run <span style="font-variant: small-caps">TC3</span>, you need to install a version of [Eclipse](https://eclipse.org/). Besides, you need MySQL. If you do not have already installed MySQL, we recommend [XAMPP](https://www.apachefriends.org/de/index.html) (for all OS) or [WAMPP](http://www.wampserver.com/en/) (for Windows). Create an empty database ``tc3`` and import the sql-dump ``hupa_coverage.sql``.
+In order to run <span style="font-variant: small-caps">TC3</span>, you need to install a version of [Eclipse](https://eclipse.org/). Besides, you need MySQL. If you do not have already installed MySQL, we recommend [XAMPP](https://www.apachefriends.org/de/index.html) (for all OS) or [WAMPP](http://www.wampserver.com/en/) (for Windows). Create an empty database ``tc3`` and import the sql-dump ``tc3_template.sql`` (empty password).
 If you want to check out and build Hupa from source, you will need [Maven](https://maven.apache.org/). Please follow the instructions on the [Hupa website](http://james.apache.org/hupa/building.html). Alternatively, you can use precompiled versions of Hupa if you do not want to build Hupa from scratch. The precompiled versions are available for download as Eclipse-project in the ['Hupa-Versions'](../Hupa-Versions/) directory. 
 
 
@@ -27,7 +27,7 @@ If you want to do a quick code coverage analysis without running all the web tes
 Currently, calculating the code coeverage is a semi-automatic process consisting of there three steps. Basically, these steps could be executed automatically. However, they depend on the test framework in use (e.g. JUnit, TestNG vs. Selenium, TestComplete...). For this reason, we currently leave the test execution step to the user. In our evaulation, we have only considered the runtime required for instrumenting the code and for calculating the code coverage.
 
 1. Click in <span style="font-variant: small-caps">TC3</span> on the Settings-icon. Select the project you want to analyze. For example, use 'EclispeHupaR1684702' in the ['Hupa-Versions'](../Hupa-Versions/) directory (please note the README-file in this directory). Select the analysis precision level. We have used Expression Star as instumentation level in our evaluation. Define the packages that contain client-side code and server-side/desktop application code, respectively. Click OK.
-2. Make sure the MySQL-dump ``hupa_coverage.sql`` is available.
+2. Import the MySQL-dump ``hupa_coverage.sql`` into the database ``tc3``.
 3. Determine the code coverage. Start the calculation by clicking on the statistics button. Look at the metrics in the table. 
 
 
