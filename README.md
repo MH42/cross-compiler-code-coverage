@@ -10,3 +10,8 @@ The main features of <span style="font-variant: small-caps">TC3</span> are:
 In the evaluation of <span style="font-variant: small-caps">TC3</span>, we have used the open source mail client [Hupa](http://james.apache.org/hupa/index.html). See the [webtests](./webtests)-directory for code coverage results and webtests. In order to demonstrate the usability in other applications, we have additionally evaluated our tool using standard desktop applications. In this area, researchers often used
 the ["Software-artifact Infrastructure Repository (SIR)"](http://sir.unl.edu/). Thereof, we have used the latest version of JMeter, JTopas and Xml-Security. 
 Unfortunately, we do not have the permission to publish the source code of these tools. For this reason, please download the sources from the ["Software-artifact Infrastructure Repository (SIR)"](http://sir.unl.edu/).
+
+# Screenshots
+
+<img src="Code Coverage Results.png" width="600px" alt="TC3"/>
+<img src="coverage.png" width="600px" alt="HTML-Code Coverage Report"/>
